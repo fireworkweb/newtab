@@ -7182,6 +7182,12 @@ vue-loader@^13.7.0:
     vue-style-loader "^3.0.0"
     vue-template-es2015-compiler "^1.6.0"
 
+vue-save-state@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/vue-save-state/-/vue-save-state-1.2.0.tgz#fefedc1e5af6a3b0a397c13e41113000404c1963"
+  dependencies:
+    lodash "^4.0.0"
+
 vue-style-loader@^3.0.0:
   version "3.1.1"
   resolved "https://registry.yarnpkg.com/vue-style-loader/-/vue-style-loader-3.1.1.tgz#74fdef91a81d38bc0125746a1b5505e62d69e32c"
