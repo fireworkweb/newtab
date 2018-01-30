@@ -17,9 +17,4 @@ mix
             new HtmlWebpackPlugin({ template: './src/index.html' }),
         ],
     })
-    .purgeCss({
-        globs: [
-            './src/index.html',
-            './src/**/*.vue',
-        ],
-    });
+    .purgeCss({ globs: [ './src/**/*.vue' ] });
