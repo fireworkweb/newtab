@@ -1,6 +1,6 @@
 <template>
     <div :class="`app-color-${theme}`">
-        <div class="font-sans font-normal text-black leading-normal bg-primary-darkest">
+        <div class="font-sans font-normal text-black leading-normal bg-primary-darkest h-screen">
             <div class="flex justify-between p-4 pb-8">
                 <h1 class="text-primary-darker">New Tab</h1>
 
@@ -419,6 +419,7 @@ export default {
 
         reset () {
             this.clearSavedState();
+
             location.reload();
         },
 
