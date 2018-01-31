@@ -56,14 +56,6 @@ let colors = {
   'grey-lightest': '#f8fafc',
   'white': '#ffffff',
 
-  // 'primary-darkest': '#21183c',
-  // 'primary-darker': '#382b5f',
-  // 'primary-dark': '#794acf',
-  // 'primary': '#9561e2',
-  // 'primary-light': '#a779e9',
-  // 'primary-lighter': '#d6bbfc',
-  // 'primary-lightest': '#f3ebff',
-
   'red-darkest': '#3b0d0c',
   'red-darker': '#621b18',
   'red-dark': '#cc1f1a',
