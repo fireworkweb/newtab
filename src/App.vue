@@ -432,3 +432,32 @@ export default {
     },
 };
 </script>
+
+<style lang="scss">
+@tailwind preflight;
+@tailwind utilities;
+
+$colors: (
+    'grey', 'red', 'orange', 'yellow', 'green',
+    'teal', 'blue', 'indigo', 'purple', 'pink',
+);
+
+$tons: (
+    'darkest', 'darker', 'dark',
+    'light', 'lighter', 'lightest',
+);
+
+@each $color in $colors {
+    .app-color-#{$color} {
+        .bg-primary { @apply .bg-#{$color} }
+        .border-primary { @apply .border-#{$color} }
+        .text-primary { @apply .text-#{$color} }
+
+        @each $ton in $tons {
+            .bg-primary-#{$ton} { @apply .bg-#{$color}-#{$ton} }
+            .border-primary-#{$ton} { @apply .border-#{$color}-#{$ton} }
+            .text-primary-#{$ton} { @apply .text-#{$color}-#{$ton} }
+        }
+    }
+}
+</style>

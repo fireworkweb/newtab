@@ -7,7 +7,6 @@ require('laravel-mix-purgecss');
 mix
     .setPublicPath('dist')
     .js('src/main.js', 'dist')
-    .sass('src/app.scss', 'dist')
     .options({
         processCssUrls: false,
         postCss: [ tailwindcss('./tailwind.js') ],
@@ -17,4 +16,7 @@ mix
             new HtmlWebpackPlugin({ template: './src/index.html' }),
         ],
     })
-    .purgeCss({ globs: [ './src/**/*.vue' ] });
+    .purgeCss({
+        globs: [ './src/**/index.html', './src/**/*.vue' ],
+        whitelistPatterns: [ /^app-color-/ ],
+    });
