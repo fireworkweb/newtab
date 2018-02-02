@@ -111,7 +111,7 @@
                                 v-if="item.icon"
                                 class="block h-32 mb-1 bg-primary py-3"
                             >
-                                <i :class="`far fa-5x fa-${item.icon}`"></i>
+                                <i :class="`fa-5x ${item.icon}`"></i>
                             </span>
                             <span
                                 v-if="item.title"
@@ -279,7 +279,7 @@ export default {
                 items: [
                     {
                         url: 'https://calendar.google.com/calendar/r',
-                        icon: 'calendar-alt',
+                        icon: 'far fa-calendar-alt',
                         title: 'Calendar',
                     },
                     {
@@ -319,7 +319,7 @@ export default {
                 items: [
                     {
                         url: 'https://calendar.google.com/calendar/r',
-                        icon: 'calendar-alt',
+                        icon: 'far fa-calendar-alt',
                         title: 'Calendar',
                     },
                     {
