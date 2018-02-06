@@ -81,7 +81,7 @@
 
                 <div class="flex flex-wrap -mx-2 py-2">
                     <div
-                        class="w-1/5 p-2 relative group opacity-50 hover:opacity-100"
+                        class="w-64 p-2 relative group opacity-50 hover:opacity-100"
                         v-for="(item, itemKey) in section.items"
                         :key="itemKey"
                     >
@@ -284,32 +284,32 @@ export default {
                     },
                     {
                         url: '#',
-                        image: 'http://via.placeholder.com/300x130',
+                        image: 'http://via.placeholder.com/224x128',
                         title: 'Test',
                     },
                     {
                         url: '#',
-                        image: 'http://via.placeholder.com/300x130',
+                        image: 'http://via.placeholder.com/224x128',
                         title: 'Test',
                     },
                     {
                         url: '#',
-                        image: 'http://via.placeholder.com/300x130',
+                        image: 'http://via.placeholder.com/224x128',
                         title: 'Test',
                     },
                     {
                         url: '#',
-                        image: 'http://via.placeholder.com/300x130',
+                        image: 'http://via.placeholder.com/224x128',
                         title: 'Test',
                     },
                     {
                         url: '#',
-                        image: 'http://via.placeholder.com/300x130',
+                        image: 'http://via.placeholder.com/224x128',
                         title: 'Test',
                     },
                     {
                         url: '#',
-                        image: 'http://via.placeholder.com/300x130',
+                        image: 'http://via.placeholder.com/224x128',
                         title: 'Test',
                     },
                 ],
@@ -324,22 +324,22 @@ export default {
                     },
                     {
                         url: '#',
-                        image: 'http://via.placeholder.com/300x130',
+                        image: 'http://via.placeholder.com/224x128',
                         title: 'Test',
                     },
                     {
                         url: '#',
-                        image: 'http://via.placeholder.com/300x130',
+                        image: 'http://via.placeholder.com/224x128',
                         title: 'Test',
                     },
                     {
                         url: '#',
-                        image: 'http://via.placeholder.com/300x130',
+                        image: 'http://via.placeholder.com/224x128',
                         title: 'Test',
                     },
                     {
                         url: '#',
-                        image: 'http://via.placeholder.com/300x130',
+                        image: 'http://via.placeholder.com/224x128',
                         title: 'Test',
                     },
                 ],
