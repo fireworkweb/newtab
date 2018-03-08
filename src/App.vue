@@ -64,11 +64,12 @@
                     <div>
                         <button
                             class="py-2 px-4 shadow-md text-primary-dark hover:text-primary-light"
-                            title="Section Settings"
-                            @click="openSectionModel(sectionKey)"
+                            title="Delete Section"
+                            @click="removeSectionModel(sectionKey)"
                         >
-                            <i class="fas fa-cog"></i>
+                            <i class="fas fa-trash-alt"></i>
                         </button>
+
 
                         <button
                             class="py-2 px-4 shadow-md text-primary-dark hover:text-primary-light"
@@ -389,6 +390,10 @@ export default {
 
                 this.sectionModal.title = section.title;
             }
+        },
+
+        removeSectionModel(sectionKey) {
+            this.sections.splice(sectionKey, 1);
         },
 
         submitSectionModal() {
