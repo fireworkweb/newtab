@@ -122,130 +122,118 @@
                 </div>
             </div>
 
-            <div
-                class="fixed pin flex items-center"
-                v-if="itemModal.isOpened"
+            <modal
+                name="itemModal"
+                :width="435"
+                :height="380"
             >
-                <div
-                    class="fixed pin bg-black opacity-75 z-10"
-                    @click="closeItemModal()"
-                ></div>
+                <div class="p-6">
+                    <div class="flex justify-between mb-6">
+                        <h1 class="text-2xl text-primary">Add Item</h1>
 
-                <div class="relative mx-6 md:mx-auto w-full md:w-1/2 lg:w-1/3 z-20 m-8">
-                    <div class="shadow-lg bg-white rounded-lg p-6">
-                        <div class="flex justify-between mb-6">
-                            <h1 class="text-2xl text-primary">Add Item</h1>
+                        <button
+                            class="text-primary-lighter"
+                            @click="closeItemModal()"
+                        >
+                            <span><i class="fas fa-times"></i></span>
+                        </button>
+                    </div>
 
-                            <button
-                                class="text-primary-lighter"
-                                @click="closeItemModal()"
+                    <form class="">
+                        <div class="border-b border-b-2 border-primary py-2 mt-3">
+                            <input
+                                class="appearance-none bg-transparent border-none w-full text-grey-darker py-1 px-2"
+                                type="text"
+                                placeholder="Title"
+                                v-model="itemModal.title"
                             >
-                                <span><i class="fas fa-times"></i></span>
-                            </button>
                         </div>
 
-                        <form class="">
-                            <div class="border-b border-b-2 border-primary py-2 mt-3">
-                                <input
-                                    class="appearance-none bg-transparent border-none w-full text-grey-darker py-1 px-2"
-                                    type="text"
-                                    placeholder="Title"
-                                    v-model="itemModal.title"
-                                >
-                            </div>
-
-                            <div class="border-b border-b-2 border-primary py-2 mt-3">
-                                <input
-                                    class="appearance-none bg-transparent border-none w-full text-grey-darker py-1 px-2"
-                                    type="text"
-                                    placeholder="Icon"
-                                    v-model="itemModal.icon"
-                                >
-                            </div>
-
-                            <div class="border-b border-b-2 border-primary py-2 mt-3">
-                                <input
-                                    class="appearance-none bg-transparent border-none w-full text-grey-darker py-1 px-2"
-                                    type="text"
-                                    placeholder="Image"
-                                    v-model="itemModal.image"
-                                >
-                            </div>
-
-                            <div class="border-b border-b-2 border-primary py-2 mt-3">
-                                <input
-                                    class="appearance-none bg-transparent border-none w-full text-grey-darker py-1 px-2"
-                                    type="text"
-                                    placeholder="URL"
-                                    v-model="itemModal.url"
-                                >
-                            </div>
-
-                            <div class="text-right mt-6">
-                                <button
-                                    class="
-                                        bg-primary hover:bg-primary-light
-                                        text-white font-bold py-2 px-4 rounded
-                                        border-b-4 border-primary-dark hover:border-primary
-                                    "
-                                    @click.prevent="submitItemModal()"
-                                >
-                                    Add Item
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-
-            <div
-                class="fixed pin flex items-center"
-                v-if="sectionModal.isOpened"
-            >
-                <div
-                    class="fixed pin bg-black opacity-75 z-10"
-                    @click="closeSectionModal()"
-                ></div>
-
-                <div class="relative mx-6 md:mx-auto w-full md:w-1/2 lg:w-1/3 z-20 m-8">
-                    <div class="shadow-lg bg-white rounded-lg p-6">
-                        <div class="flex justify-between mb-6">
-                            <h1 class="text-2xl text-primary">Add Section</h1>
-
-                            <button
-                                class="text-primary-lighter"
-                                @click="closeSectionModal()"
+                        <div class="border-b border-b-2 border-primary py-2 mt-3">
+                            <input
+                                class="appearance-none bg-transparent border-none w-full text-grey-darker py-1 px-2"
+                                type="text"
+                                placeholder="Icon"
+                                v-model="itemModal.icon"
                             >
-                                <span><i class="fas fa-times"></i></span>
-                            </button>
                         </div>
 
-                        <form class="">
-                            <div class="border-b border-b-2 border-primary py-2 mt-3">
-                                <input
-                                    class="appearance-none bg-transparent border-none w-full text-grey-darker py-1 px-2"
-                                    type="text"
-                                    placeholder="Title"
-                                    v-model="sectionModal.title"
-                                >
-                            </div>
+                        <div class="border-b border-b-2 border-primary py-2 mt-3">
+                            <input
+                                class="appearance-none bg-transparent border-none w-full text-grey-darker py-1 px-2"
+                                type="text"
+                                placeholder="Image"
+                                v-model="itemModal.image"
+                            >
+                        </div>
 
-                            <div class="text-right mt-6">
-                                <button
-                                    class="
-                                        bg-primary hover:bg-primary-light
-                                        text-white font-bold py-2 px-4 rounded
-                                        border-b-4 border-primary-dark hover:border-primary
-                                    "
-                                    @click.prevent="submitSectionModal()"
-                                >
-                                    Add Section
-                                </button>
-                            </div>
-                        </form>
-                    </div>
+                        <div class="border-b border-b-2 border-primary py-2 mt-3">
+                            <input
+                                class="appearance-none bg-transparent border-none w-full text-grey-darker py-1 px-2"
+                                type="text"
+                                placeholder="URL"
+                                v-model="itemModal.url"
+                            >
+                        </div>
+
+                        <div class="text-right mt-6">
+                            <button
+                                class="
+                                    bg-primary hover:bg-primary-light
+                                    text-white font-bold py-2 px-4 rounded
+                                    border-b-4 border-primary-dark hover:border-primary
+                                "
+                                @click.prevent="submitItemModal()"
+                            >
+                                Add Item
+                            </button>
+                        </div>
+                    </form>
                 </div>
-            </div>
+            </modal>
+
+            <modal
+                name="sectionModal"
+                :width="435"
+                :height="215"
+            >
+                <div class="p-6">
+                    <div class="flex justify-between mb-6">
+                        <h1 class="text-2xl text-primary">Add Section</h1>
+
+                        <button
+                            class="text-primary-lighter"
+                            @click="closeSectionModal()"
+                        >
+                            <span><i class="fas fa-times"></i></span>
+                        </button>
+                    </div>
+
+                    <form class="">
+                        <div class="border-b border-b-2 border-primary py-2 mt-3">
+                            <input
+                                class="appearance-none bg-transparent border-none w-full text-grey-darker py-1 px-2"
+                                type="text"
+                                placeholder="Title"
+                                v-model="sectionModal.title"
+                            >
+                        </div>
+
+                        <div class="text-right mt-6">
+                            <button
+                                class="
+                                    bg-primary hover:bg-primary-light
+                                    text-white font-bold py-2 px-4 rounded
+                                    border-b-4 border-primary-dark hover:border-primary
+                                "
+                                @click.prevent="submitSectionModal()"
+                            >
+                                Add Section
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </modal>
         </div>
     </div>
 </template>
@@ -258,7 +246,6 @@ export default {
 
     data: () => ({
         itemModal: {
-            isOpened: false,
             sectionKey: null,
             itemKey: null,
             title: '',
@@ -268,7 +255,6 @@ export default {
         },
 
         sectionModal: {
-            isOpened: false,
             sectionKey: null,
             title: '',
         },
@@ -356,7 +342,8 @@ export default {
 
     methods: {
         openItemModel(sectionKey, itemKey) {
-            this.itemModal.isOpened = true;
+            this.$modal.show('itemModal');
+
             this.itemModal.sectionKey = sectionKey;
             this.itemModal.itemKey = itemKey;
 
@@ -382,7 +369,8 @@ export default {
         },
 
         closeItemModal() {
-            this.itemModal.isOpened = false;
+            this.$modal.hide('itemModal');
+
             this.itemModal.sectionKey = null;
             this.itemModal.itemKey = null;
             this.itemModal.title = '';
@@ -392,7 +380,8 @@ export default {
         },
 
         openSectionModel(sectionKey) {
-            this.sectionModal.isOpened = true;
+            this.$modal.show('sectionModal');
+
             this.sectionModal.sectionKey = sectionKey;
 
             if (sectionKey !== undefined) {
@@ -412,7 +401,8 @@ export default {
         },
 
         closeSectionModal() {
-            this.sectionModal.isOpened = false;
+            this.$modal.hide('sectionModal');
+
             this.sectionModal.sectionKey = null;
             this.sectionModal.title = '';
         },
