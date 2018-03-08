@@ -88,6 +88,14 @@
                     >
                         <button
                             class="absolute p-1 opacity-25 hover:opacity-100 text-grey-darker"
+                            style="top: 1.25rem; right: 2.5rem;"
+                            @click="removeItemModel(sectionKey, itemKey)"
+                        >
+                            <i class="fas fa-trash-alt"></i>
+                        </button>
+
+                        <button
+                            class="absolute p-1 opacity-25 hover:opacity-100 text-grey-darker"
                             style="top: 1.25rem; right: 1.25rem;"
                             @click="openItemModel(sectionKey, itemKey)"
                         >
@@ -369,6 +377,10 @@ export default {
             this.closeItemModal();
         },
 
+        removeItemModel(sectionKey, itemKey) {
+            this.sections[sectionKey].items.splice(itemKey, 1);
+        },
+
         closeItemModal() {
             this.$modal.hide('itemModal');
 
@@ -392,10 +404,6 @@ export default {
             }
         },
 
-        removeSectionModel(sectionKey) {
-            this.sections.splice(sectionKey, 1);
-        },
-
         submitSectionModal() {
             this.sections.push({
                 title: this.sectionModal.title,
@@ -403,6 +411,10 @@ export default {
             });
 
             this.closeSectionModal();
+        },
+
+        removeSectionModel(sectionKey) {
+            this.sections.splice(sectionKey, 1);
         },
 
         closeSectionModal() {
