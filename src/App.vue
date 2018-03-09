@@ -95,6 +95,14 @@
                     >
                         <button
                             class="absolute p-1 opacity-25 hover:opacity-100 text-grey-darker"
+                            style="top: 1.25rem; right: 3.75rem;"
+                            @click="openItemModel(sectionKey, itemKey)"
+                        >
+                            <i class="fas fa-edit"></i>
+                        </button>
+
+                        <button
+                            class="absolute p-1 opacity-25 hover:opacity-100 text-grey-darker"
                             style="top: 1.25rem; right: 2.5rem;"
                             @click="removeItemModel(sectionKey, itemKey)"
                         >
@@ -199,7 +207,7 @@
                                     text-white font-bold py-2 px-4 rounded
                                     border-b-4 border-primary-dark hover:border-primary
                                 "
-                                @click.prevent="submitItemModal()"
+                                @click.prevent="submitItemModal(itemModal.sectionKey, itemModal.itemKey)"
                             >
                                 Add Item
                             </button>
@@ -373,13 +381,20 @@ export default {
             }
         },
 
-        submitItemModal() {
-            this.sections[this.itemModal.sectionKey].items.push({
-                title: this.itemModal.title,
-                icon: this.itemModal.icon,
-                image: this.itemModal.image,
-                url: this.itemModal.url,
-            });
+        submitItemModal(sectionKey, itemKey) {
+            if (itemKey !== undefined) {
+                this.sections[sectionKey].items[itemKey].title = this.itemModal.title;
+                this.sections[sectionKey].items[itemKey].icon = this.itemModal.icon;
+                this.sections[sectionKey].items[itemKey].image = this.itemModal.image;
+                this.sections[sectionKey].items[itemKey].url = this.itemModal.url;
+            } else {
+                this.sections[this.itemModal.sectionKey].items.push({
+                    title: this.itemModal.title,
+                    icon: this.itemModal.icon,
+                    image: this.itemModal.image,
+                    url: this.itemModal.url,
+                });
+            }
 
             this.closeItemModal();
         },
