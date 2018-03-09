@@ -27,13 +27,14 @@
                     <button
                         class="py-2 px-4 ml-2 shadow-md text-primary-dark hover:text-primary-light"
                     >
-                        <i class="fas fa-import"></i> Import
+                        <i class="fas fa-download"></i> Import
                     </button>
 
                     <button
                         class="py-2 px-4 ml-2 shadow-md text-primary-dark hover:text-primary-light"
+                        @click="openTransferInfos()"
                     >
-                        <i class="fas fa-export"></i> Export
+                        <i class="fas fa-upload"></i> Export
                     </button>
 
                     <button
@@ -258,6 +259,49 @@
                     </form>
                 </div>
             </modal>
+
+            <modal
+                name="transferInfos"
+                :width="435"
+                :height="380"
+            >
+                <div class="p-6">
+                    <div class="flex justify-between mb-6">
+                        <h1 class="text-2xl text-primary">Export</h1>
+
+                        <button
+                            class="text-primary-lighter"
+                            @click="closeTransferInfos()"
+                        >
+                            <span><i class="fas fa-times"></i></span>
+                        </button>
+                    </div>
+
+                    <form class="">
+                        <div class="border-b border-b-2 border-primary py-2 mt-3">
+                            <textarea
+                                class="appearance-none bg-transparent border-none w-full text-grey-darker py-1 px-2"
+                                rows="9"
+                                v-model="transferModal.data"
+                            >
+                            </textarea>
+                        </div>
+
+                        <div class="text-right mt-6" v-if="isImport">
+                            <button
+                                class="
+                                    bg-primary hover:bg-primary-light
+                                    text-white font-bold py-2 px-4 rounded
+                                    border-b-4 border-primary-dark hover:border-primary
+                                "
+                                @click.prevent="submitSectionModal(sectionModal.sectionKey)"
+                            >
+                                Save
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </modal>
         </div>
     </div>
 </template>
@@ -282,6 +326,12 @@ export default {
             sectionKey: null,
             title: '',
         },
+
+        transferModal: {
+            data: '',
+        },
+
+        isImport: false,
 
         sections: [
             {
@@ -448,6 +498,19 @@ export default {
 
             this.sectionModal.sectionKey = null;
             this.sectionModal.title = '';
+        },
+
+        openTransferInfos () {
+            this.$modal.show('transferInfos');
+
+            let local = window.localStorage;
+            let storage = JSON.stringify(local.App).replace(/\\/g, "");
+
+            this.transferModal.data = storage;
+        },
+
+        closeTransferInfos () {
+            this.$modal.hide('transferInfos');
         },
 
         reset () {
