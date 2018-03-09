@@ -64,12 +64,19 @@
                     <div>
                         <button
                             class="py-2 px-4 shadow-md text-primary-dark hover:text-primary-light"
+                            title="Edit Section"
+                            @click="openSectionModel(sectionKey)"
+                        >
+                            <i class="fas fa-edit"></i>
+                        </button>
+
+                        <button
+                            class="py-2 px-4 shadow-md text-primary-dark hover:text-primary-light"
                             title="Delete Section"
                             @click="removeSectionModel(sectionKey)"
                         >
                             <i class="fas fa-trash-alt"></i>
                         </button>
-
 
                         <button
                             class="py-2 px-4 shadow-md text-primary-dark hover:text-primary-light"
@@ -235,7 +242,7 @@
                                     text-white font-bold py-2 px-4 rounded
                                     border-b-4 border-primary-dark hover:border-primary
                                 "
-                                @click.prevent="submitSectionModal()"
+                                @click.prevent="submitSectionModal(sectionModal.sectionKey)"
                             >
                                 Add Section
                             </button>
@@ -404,11 +411,15 @@ export default {
             }
         },
 
-        submitSectionModal() {
-            this.sections.push({
-                title: this.sectionModal.title,
-                items: [],
-            });
+        submitSectionModal(sectionKey) {
+            if (sectionKey !== undefined) {
+                this.sections[sectionKey].title = this.sectionModal.title;
+            } else {
+                this.sections.push({
+                    title: this.sectionModal.title,
+                    items: [],
+                });
+            }
 
             this.closeSectionModal();
         },
