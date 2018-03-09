@@ -26,13 +26,14 @@
 
                     <button
                         class="py-2 px-4 ml-2 shadow-md text-primary-dark hover:text-primary-light"
+                        @click="importClicked()"
                     >
                         <i class="fas fa-download"></i> Import
                     </button>
 
                     <button
                         class="py-2 px-4 ml-2 shadow-md text-primary-dark hover:text-primary-light"
-                        @click="openTransferInfos()"
+                        @click="openImportExport()"
                     >
                         <i class="fas fa-upload"></i> Export
                     </button>
@@ -267,11 +268,11 @@
             >
                 <div class="p-6">
                     <div class="flex justify-between mb-6">
-                        <h1 class="text-2xl text-primary">Export</h1>
+                        <h1 class="text-2xl text-primary" v-text="tranferTitle"></h1>
 
                         <button
                             class="text-primary-lighter"
-                            @click="closeTransferInfos()"
+                            @click="closeImportExport()"
                         >
                             <span><i class="fas fa-times"></i></span>
                         </button>
@@ -294,7 +295,7 @@
                                     text-white font-bold py-2 px-4 rounded
                                     border-b-4 border-primary-dark hover:border-primary
                                 "
-                                @click.prevent="submitSectionModal(sectionModal.sectionKey)"
+                                @click.prevent="submitImportExport(transferModal.data)"
                             >
                                 Save
                             </button>
@@ -332,6 +333,7 @@ export default {
         },
 
         isImport: false,
+        tranferTitle: '',
 
         sections: [
             {
@@ -500,17 +502,34 @@ export default {
             this.sectionModal.title = '';
         },
 
-        openTransferInfos () {
-            this.$modal.show('transferInfos');
-
-            let local = window.localStorage;
-            let storage = JSON.stringify(local.App).replace(/\\/g, "");
-
-            this.transferModal.data = storage;
+        importClicked () {
+            this.isImport = true;
+            this.openImportExport();
         },
 
-        closeTransferInfos () {
+        openImportExport () {
+            this.$modal.show('transferInfos');
+
+            this.tranferTitle = this.isImport ? 'Import' : 'Export';
+            let local = window.localStorage;
+
+            let storage = JSON.stringify(local.App).replace(/\\/g, "");
+
+            if(! this.isImport) {
+                this.transferModal.data = storage;
+            }
+        },
+
+        submitImportExport (newStorage) {
+            this.validateText(JSON.parse(newStorage));
+
+            this.closeImportExport();
+        },
+
+        closeImportExport () {
             this.$modal.hide('transferInfos');
+            this.isImport = false;
+            this.transferModal.data = '';
         },
 
         reset () {
@@ -524,6 +543,50 @@ export default {
                 'cacheKey': 'App',
                 'saveProperties': ['theme', 'sections'],
             };
+        },
+
+        validateText(importText) {
+            if (! importText.theme) {
+                return;
+            }
+
+            if(this.themes.indexOf(importText.theme) === -1) {
+                return;
+            }
+
+            if(! importText.sections) {
+                return;
+            }
+
+            let sectionsToImport = [];
+
+            importText.sections.forEach(section => {
+                if(! section.title) {
+                    return;
+                }
+
+                let itemsToImport = [];
+                section.items.forEach((item) => {
+                    if (! item.title && !item.url) {
+                        return;
+                    }
+
+                    itemsToImport.push({
+                       title: item.title,
+                       icon: item.icon || '',
+                       image: item.image || '',
+                       url: item.url,
+                   });
+                });
+
+                sectionsToImport.push({
+                    title: section.title,
+                    items: itemsToImport,
+                });
+            });
+
+            this.sections = sectionsToImport;
+            this.theme = importText.theme;
         },
     },
 };
