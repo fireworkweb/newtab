@@ -210,8 +210,7 @@
                             "
                             @click="submitItemModal()"
                             v-text="'Add Item'"
-                        >
-                        </button>
+                        ></button>
                     </div>
                 </div>
             </modal>
@@ -251,8 +250,7 @@
                             "
                             @click="submitSectionModal()"
                             v-text="'Add Section'"
-                        >
-                        </button>
+                        ></button>
                     </div>
                 </div>
             </modal>
@@ -279,8 +277,7 @@
                             class="appearance-none bg-transparent border-none w-full text-grey-darker py-1 px-2"
                             rows="9"
                             v-model="importExportModal.data"
-                        >
-                        </textarea>
+                        ></textarea>
                     </div>
 
                     <div class="text-right mt-6" v-if="isImport">
@@ -448,7 +445,7 @@ export default {
         },
 
         removeItem(sectionKey, itemKey) {
-            if(confirm("Delete item?")) {
+            if(confirm('Delete item?')) {
                 this.sections[sectionKey].items.splice(itemKey, 1);
             }
         },
@@ -492,7 +489,7 @@ export default {
         },
 
         removeSection(sectionKey) {
-            if(confirm("Delete section?")) {
+            if(confirm('Delete section?')) {
                 this.sections.splice(sectionKey, 1);
             }
         },
@@ -534,20 +531,19 @@ export default {
                 return;
             }
 
-            let sections = importText.sections.filter(section => {
-                return !! section.title;
-            }).map(section => {
-                section.items = section.items.filter(item => {
-                    return item.title && item.url;
-                }).map(item => {
-                    return {
-                        title: item.title,
-                        icon: item.icon || '',
-                        image: item.image || '',
-                        url: item.url,
-                    };
-                });
-
+            let sections = importText
+                .sections
+                .filter(section => !! section.title)
+                .map(section => {
+                    section.items = section
+                        .items
+                        .filter(item => item.title && item.url)
+                        .map(item => ({
+                            title: item.title,
+                            icon: item.icon || '',
+                            image: item.image || '',
+                            url: item.url,
+                        }));
                 return section;
             });
 
