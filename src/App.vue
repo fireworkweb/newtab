@@ -550,7 +550,7 @@ export default {
         },
 
         reset () {
-            if(confirm('Reset all configurations?')) {
+            if (confirm('Reset all configurations?')) {
                 this.clearSavedState();
                 location.reload();
             }
