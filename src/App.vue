@@ -395,7 +395,7 @@ export default {
     }),
 
     methods: {
-        openItemModal(sectionKey, itemKey) {
+        openItemModal (sectionKey, itemKey) {
             this.itemModal.modalName = itemKey !== undefined ? 'Edit Item' : 'Add Item';
 
             this.itemModal.sectionKey = sectionKey;
