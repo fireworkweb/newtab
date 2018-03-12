@@ -68,7 +68,7 @@
                         <button
                             class="py-2 px-4 shadow-md text-primary-dark hover:text-primary-light"
                             title="Edit Section"
-                            @click="openSectionModal(sectionKey, true)"
+                            @click="openSectionModal(sectionKey)"
                         >
                             <i class="fas fa-edit"></i>
                         </button>
@@ -100,7 +100,7 @@
                         <button
                             class="absolute p-1 opacity-25 hover:opacity-100 text-grey-darker"
                             style="top: 1.25rem; right: 1.25rem;"
-                            @click="openItemModal(sectionKey, itemKey, true)"
+                            @click="openItemModal(sectionKey, itemKey)"
                         >
                             <i class="fas fa-edit"></i>
                         </button>
@@ -395,8 +395,8 @@ export default {
     }),
 
     methods: {
-        openItemModal(sectionKey, itemKey, isEdit = false) {
-            this.itemModal.modalName = isEdit ? 'Edit Item' : 'Add Item';
+        openItemModal(sectionKey, itemKey) {
+            this.itemModal.modalName = itemKey !== undefined ? 'Edit Item' : 'Add Item';
 
             this.itemModal.sectionKey = sectionKey;
             this.itemModal.itemKey = itemKey;
@@ -450,8 +450,8 @@ export default {
             this.$modal.hide('itemModal');
         },
 
-        openSectionModal(sectionKey, isEdit = false) {
-            this.sectionModal.modalName = isEdit ? 'Edit Section' : 'Add Section';
+        openSectionModal(sectionKey) {
+            this.sectionModal.modalName = sectionKey !== undefined ? 'Edit Section' : 'Add Section';
             this.sectionModal.sectionKey = sectionKey;
 
             if (sectionKey !== undefined) {
@@ -552,9 +552,8 @@ export default {
         reset () {
             if(confirm('Reset all configurations?')) {
                 this.clearSavedState();
+                location.reload();
             }
-
-            location.reload();
         },
 
         getSaveStateConfig() {
