@@ -40,13 +40,6 @@
 
                     <button
                         class="py-2 px-4 ml-2 shadow-md text-primary-dark hover:text-primary-light"
-                        @click="reset()"
-                    >
-                        <i class="fas fa-trash"></i> Theme
-                    </button>
-
-                    <button
-                        class="py-2 px-4 ml-2 shadow-md text-primary-dark hover:text-primary-light"
                         title="Add section"
                         @click="openSectionModal()"
                     >
@@ -66,18 +59,18 @@
                     <div>
                         <button
                             class="py-2 px-4 shadow-md text-primary-dark hover:text-primary-light"
-                            title="Edit Section"
-                            @click="openSectionModal(sectionKey)"
-                        >
-                            <i class="fas fa-edit"></i>
-                        </button>
-
-                        <button
-                            class="py-2 px-4 shadow-md text-primary-dark hover:text-primary-light"
                             title="Delete Section"
                             @click="removeSection(sectionKey)"
                         >
                             <i class="fas fa-trash-alt"></i>
+                        </button>
+
+                        <button
+                            class="py-2 px-4 shadow-md text-primary-dark hover:text-primary-light"
+                            title="Edit Section"
+                            @click="openSectionModal(sectionKey)"
+                        >
+                            <i class="fas fa-edit"></i>
                         </button>
 
                         <button
@@ -95,17 +88,10 @@
                         v-for="(item, itemKey) in section.items"
                         :key="itemKey"
                     >
-                        <button
-                            class="absolute p-1 opacity-25 hover:opacity-100 text-grey-darker"
-                            style="top: 1.25rem; right: 3.75rem;"
-                            @click="openItemModal(sectionKey, itemKey)"
-                        >
-                            <i class="fas fa-edit"></i>
-                        </button>
 
                         <button
                             class="absolute p-1 opacity-25 hover:opacity-100 text-grey-darker"
-                            style="top: 1.25rem; right: 2.5rem;"
+                            style="top: 1.25rem; right: 2.75rem;"
                             @click="removeItem(sectionKey, itemKey)"
                         >
                             <i class="fas fa-trash-alt"></i>
@@ -116,9 +102,8 @@
                             style="top: 1.25rem; right: 1.25rem;"
                             @click="openItemModal(sectionKey, itemKey)"
                         >
-                            <i class="fas fa-cog"></i>
+                            <i class="fas fa-edit"></i>
                         </button>
-
                         <a
                             class="
                                 block p-2 shadow-md text-center text-xl no-underline
@@ -155,7 +140,7 @@
             >
                 <div class="p-6">
                     <div class="flex justify-between mb-6">
-                        <h1 class="text-2xl text-primary">Add Item</h1>
+                        <h1 class="text-2xl text-primary" v-text="itemModal.modalName"></h1>
 
                         <button
                             class="text-primary-lighter"
@@ -209,7 +194,7 @@
                                 border-b-4 border-primary-dark hover:border-primary
                             "
                             @click="submitItemModal()"
-                            v-text="'Add Item'"
+                            v-text="itemModal.modalName"
                         ></button>
                     </div>
                 </div>
@@ -222,7 +207,7 @@
             >
                 <div class="p-6">
                     <div class="flex justify-between mb-6">
-                        <h1 class="text-2xl text-primary" v-text="'Add Section'"></h1>
+                        <h1 class="text-2xl text-primary" v-text="sectionModal.modalName"></h1>
 
                         <button
                             class="text-primary-lighter"
@@ -249,7 +234,7 @@
                                 border-b-4 border-primary-dark hover:border-primary
                             "
                             @click="submitSectionModal()"
-                            v-text="'Add Section'"
+                            v-text="sectionModal.modalName"
                         ></button>
                     </div>
                 </div>
@@ -308,6 +293,7 @@ export default {
         itemModal: {
             sectionKey: null,
             itemKey: null,
+            modalName: '',
             title: '',
             icon: '',
             image: '',
@@ -316,6 +302,7 @@ export default {
 
         sectionModal: {
             sectionKey: null,
+            modalName: '',
             title: '',
         },
 
@@ -409,6 +396,8 @@ export default {
 
     methods: {
         openItemModal(sectionKey, itemKey) {
+            this.itemModal.modalName = itemKey !== undefined ? 'Edit Item' : 'Add Item';
+
             this.itemModal.sectionKey = sectionKey;
             this.itemModal.itemKey = itemKey;
 
@@ -462,6 +451,7 @@ export default {
         },
 
         openSectionModal(sectionKey) {
+            this.sectionModal.modalName = sectionKey !== undefined ? 'Edit Section' : 'Add Section';
             this.sectionModal.sectionKey = sectionKey;
 
             if (sectionKey !== undefined) {
@@ -560,9 +550,10 @@ export default {
         },
 
         reset () {
-            this.clearSavedState();
-
-            location.reload();
+            if (confirm('Reset all configurations?')) {
+                this.clearSavedState();
+                location.reload();
+            }
         },
 
         getSaveStateConfig() {
