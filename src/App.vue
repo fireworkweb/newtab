@@ -544,8 +544,8 @@ export default {
                             image: item.image || '',
                             url: item.url,
                         }));
-                return section;
-            });
+                    return section;
+                });
 
             this.sections = sections;
 
