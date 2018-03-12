@@ -1,3 +1,4 @@
+/* global require */
 let mix = require('laravel-mix'),
     tailwindcss = require('tailwindcss'),
     HtmlWebpackPlugin = require('html-webpack-plugin');
