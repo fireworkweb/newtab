@@ -11,9 +11,9 @@
                     >
                         <option
                             v-for="(theme, key) in themes"
-                            v-text="theme"
                             :key="key"
                             :value="theme"
+                            v-text="theme"
                         ></option>
                     </select>
 
@@ -395,7 +395,7 @@ export default {
     }),
 
     methods: {
-        openItemModal(sectionKey, itemKey) {
+        openItemModal (sectionKey, itemKey) {
             this.itemModal.modalName = itemKey !== undefined ? 'Edit Item' : 'Add Item';
 
             this.itemModal.sectionKey = sectionKey;
@@ -413,7 +413,7 @@ export default {
             }
         },
 
-        submitItemModal() {
+        submitItemModal () {
             let itemKey = this.itemModal.itemKey,
                 sectionKey = this.itemModal.sectionKey,
                 section = this.sections[sectionKey],
@@ -433,13 +433,13 @@ export default {
             this.closeItemModal();
         },
 
-        removeItem(sectionKey, itemKey) {
-            if(confirm('Delete item?')) {
+        removeItem (sectionKey, itemKey) {
+            if (confirm('Delete item?')) {
                 this.sections[sectionKey].items.splice(itemKey, 1);
             }
         },
 
-        closeItemModal() {
+        closeItemModal () {
             this.itemModal.sectionKey = null;
             this.itemModal.itemKey = null;
             this.itemModal.title = '';
@@ -450,7 +450,7 @@ export default {
             this.$modal.hide('itemModal');
         },
 
-        openSectionModal(sectionKey) {
+        openSectionModal (sectionKey) {
             this.sectionModal.modalName = sectionKey !== undefined ? 'Edit Section' : 'Add Section';
             this.sectionModal.sectionKey = sectionKey;
 
@@ -463,7 +463,7 @@ export default {
             this.$modal.show('sectionModal');
         },
 
-        submitSectionModal() {
+        submitSectionModal () {
             let key = this.sectionModal.sectionKey;
 
             if (key !== undefined) {
@@ -478,13 +478,13 @@ export default {
             this.closeSectionModal();
         },
 
-        removeSection(sectionKey) {
-            if(confirm('Delete section?')) {
+        removeSection (sectionKey) {
+            if (confirm('Delete section?')) {
                 this.sections.splice(sectionKey, 1);
             }
         },
 
-        closeSectionModal() {
+        closeSectionModal () {
             this.sectionModal.sectionKey = null;
             this.sectionModal.title = '';
 
@@ -513,11 +513,11 @@ export default {
         importJson (newStorage) {
             let importText = JSON.parse(newStorage);
 
-            if(this.themes.indexOf(importText.theme) !== -1) {
+            if (this.themes.indexOf(importText.theme) !== -1) {
                 this.theme = importText.theme;
             }
 
-            if(! importText.sections) {
+            if (! importText.sections) {
                 return;
             }
 
@@ -556,7 +556,7 @@ export default {
             }
         },
 
-        getSaveStateConfig() {
+        getSaveStateConfig () {
             return {
                 'cacheKey': 'App',
                 'saveProperties': ['theme', 'sections'],
