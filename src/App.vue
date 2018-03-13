@@ -6,7 +6,7 @@
 
                 <div class="newtab__buttons">
                     <div class="newtab__select">
-                        <select  v-model="theme">
+                        <select v-model="theme">
                             <option
                                 v-for="(theme, key) in themes"
                                 v-text="theme"
@@ -29,7 +29,7 @@
                         <i class="fas fa-upload"></i> Export
                     </button>
 
-                    <button class="newtab__button" title="Add section" @click="openSectionModal()">
+                    <button class="newtab__button" @click="openSectionModal()">
                         <i class="fas fa-plus"></i> Add Section
                     </button>
                 </div>
@@ -105,7 +105,11 @@
                 </div>
             </div>
 
-            <modal name="itemModal" :width="435" :height="380">
+            <modal
+                name="itemModal"
+                :width="435"
+                :height="380"
+            >
                 <div class="newtab__modal">
                     <div class="newtab__modal_header">
                         <h1 class="newtab__modal_title" v-text="itemModal.modalName"></h1>
@@ -161,7 +165,11 @@
                 </div>
             </modal>
 
-            <modal name="sectionModal" :width="435" :height="215">
+            <modal
+                name="sectionModal"
+                :width="435"
+                :height="215"
+            >
                 <div class="newtab__modal">
                     <div class="newtab__modal_header">
                         <h1 class="newtab__modal_title" v-text="sectionModal.modalName"></h1>
@@ -190,7 +198,11 @@
                 </div>
             </modal>
 
-            <modal name="importExport" :width="435" :height="380">
+            <modal
+                name="importExport"
+                :width="435"
+                :height="380"
+            >
                 <div class="newtab__modal">
                     <div class="newtab__modal_header">
                         <h1 class="newtab__modal_title" v-text="importExportModal.title"></h1>
