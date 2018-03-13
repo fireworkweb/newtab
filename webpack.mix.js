@@ -12,6 +12,7 @@ mix
         processCssUrls: false,
         postCss: [ tailwindcss('./tailwind.js') ],
     })
+    .sass('src/sass/app.scss', 'dist')
     .webpackConfig({
         plugins: [
             new HtmlWebpackPlugin({ template: './src/index.html' }),

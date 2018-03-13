@@ -1,48 +1,35 @@
 <template>
     <div :class="`app-color-${theme}`">
-        <div class="font-sans font-normal text-black leading-normal bg-primary-darkest h-screen overflow-auto">
-            <div class="flex justify-between p-4 pb-8">
-                <h1 class="text-primary-darker">New Tab</h1>
+        <div class="newtab">
+            <div class="newtab__header">
+                <h1 class="newtab__title">New Tab</h1>
 
-                <div class="pt-2 text-right">
-                    <select
-                        class="py-2 px-4 ml-2 shadow-md text-primary-dark appearance-none bg-transparent"
-                        v-model="theme"
-                    >
-                        <option
-                            v-for="(theme, key) in themes"
-                            :key="key"
-                            :value="theme"
-                            v-text="theme"
-                        ></option>
-                    </select>
+                <div class="newtab__buttons">
+                    <div class="newtab__select">
+                        <select  v-model="theme">
+                            <option
+                                v-for="(theme, key) in themes"
+                                v-text="theme"
+                                :key="key"
+                                :value="theme"
+                            ></option>
+                        </select>
+                        <i class="fas fa-sort-down"></i>
+                    </div>
 
-                    <button
-                        class="py-2 px-4 ml-2 shadow-md text-primary-dark hover:text-primary-light"
-                        @click="reset()"
-                    >
+                    <button class="newtab__button" @click="reset()">
                         <i class="fas fa-trash"></i> Reset
                     </button>
 
-                    <button
-                        class="py-2 px-4 ml-2 shadow-md text-primary-dark hover:text-primary-light"
-                        @click="openImport()"
-                    >
+                    <button class="newtab__button" @click="openImport()">
                         <i class="fas fa-download"></i> Import
                     </button>
 
-                    <button
-                        class="py-2 px-4 ml-2 shadow-md text-primary-dark hover:text-primary-light"
-                        @click="openExport()"
-                    >
+                    <button class="newtab__button" @click="openExport()">
                         <i class="fas fa-upload"></i> Export
                     </button>
 
-                    <button
-                        class="py-2 px-4 ml-2 shadow-md text-primary-dark hover:text-primary-light"
-                        title="Add section"
-                        @click="openSectionModal()"
-                    >
+                    <button class="newtab__button" title="Add section" @click="openSectionModal()">
                         <i class="fas fa-plus"></i> Add Section
                     </button>
                 </div>
@@ -51,14 +38,14 @@
             <div
                 v-for="(section, sectionKey) in sections"
                 :key="sectionKey"
-                class="p-4 pb-4"
+                class="newtab__section"
             >
-                <div class="flex justify-between">
-                    <h2 class="text-primary-dark">{{ section.title }}</h2>
+                <div class="newtab__section_header">
+                    <h2 class="newtab__subtitle">{{ section.title }}</h2>
 
-                    <div>
+                    <div class="newtab__buttons">
                         <button
-                            class="py-2 px-4 shadow-md text-primary-dark hover:text-primary-light"
+                            class="newtab__button"
                             title="Delete Section"
                             @click="removeSection(sectionKey)"
                         >
@@ -66,7 +53,7 @@
                         </button>
 
                         <button
-                            class="py-2 px-4 shadow-md text-primary-dark hover:text-primary-light"
+                            class="newtab__button"
                             title="Edit Section"
                             @click="openSectionModal(sectionKey)"
                         >
@@ -74,125 +61,99 @@
                         </button>
 
                         <button
-                            class="py-2 px-4 shadow-md text-primary-dark hover:text-primary-light"
+                            class="newtab__button"
                             @click="openItemModal(sectionKey)"
+                            v-text="'Add Item'"
                         >
-                            <i class="fas fa-plus"></i> Add Item
+                            <i class="fas fa-plus"></i>
                         </button>
                     </div>
                 </div>
 
-                <div class="flex flex-wrap -mx-2 py-2">
+                <div class="newtab__section_body">
                     <div
-                        class="w-64 p-2 relative group opacity-50 hover:opacity-100"
+                        class="newtab__item"
                         v-for="(item, itemKey) in section.items"
                         :key="itemKey"
                     >
-
                         <button
-                            class="absolute p-1 opacity-25 hover:opacity-100 text-grey-darker"
-                            style="top: 1.25rem; right: 2.75rem;"
+                            class="newtab__item_button newtab__item_button--delete"
                             @click="removeItem(sectionKey, itemKey)"
                         >
                             <i class="fas fa-trash-alt"></i>
                         </button>
 
                         <button
-                            class="absolute p-1 opacity-25 hover:opacity-100 text-grey-darker"
-                            style="top: 1.25rem; right: 1.25rem;"
+                            class="newtab__item_button newtab__item_button--edit"
                             @click="openItemModal(sectionKey, itemKey)"
                         >
                             <i class="fas fa-edit"></i>
                         </button>
-                        <a
-                            class="
-                                block p-2 shadow-md text-center text-xl no-underline
-                                bg-primary-darker group-hover:bg-primary-dark
-                                text-primary-lightest group-hover:text-white group-hover:underline
-                            "
-                            :href="item.url"
-                        >
-                            <span
-                                v-if="item.image"
-                                class="block h-32 mb-1 bg-primary"
-                            >
+
+                        <a class="newtab__item_body" :href="item.url">
+                            <span v-if="item.image" class="newtab__item_image">
                                 <img :src="item.image">
                             </span>
-                            <span
-                                v-if="item.icon"
-                                class="block h-32 mb-1 bg-primary py-3"
-                            >
+
+                            <span v-if="item.icon" class="newtab__item_icon">
                                 <i :class="`fa-5x ${item.icon}`"></i>
                             </span>
-                            <span
-                                v-if="item.title"
-                                v-text="item.title"
-                            ></span>
+
+                            <span v-if="item.title" v-text="item.title"></span>
                         </a>
                     </div>
                 </div>
             </div>
 
-            <modal
-                name="itemModal"
-                :width="435"
-                :height="380"
-            >
-                <div class="p-6">
-                    <div class="flex justify-between mb-6">
-                        <h1 class="text-2xl text-primary" v-text="itemModal.modalName"></h1>
+            <modal name="itemModal" :width="435" :height="380">
+                <div class="newtab__modal">
+                    <div class="newtab__modal_header">
+                        <h1 class="newtab__modal_title" v-text="itemModal.modalName"></h1>
 
-                        <button
-                            class="text-primary-lighter"
-                            @click="closeItemModal()"
-                        >
+                        <button class="newtab__modal_close" @click="closeItemModal()">
                             <i class="fas fa-times"></i>
                         </button>
                     </div>
 
-                    <div class="border-b border-b-2 border-primary py-2 mt-3">
+                    <div class="newtab__modal_field">
                         <input
-                            class="appearance-none bg-transparent border-none w-full text-grey-darker py-1 px-2"
+                            class="newtab__modal_input"
                             type="text"
                             placeholder="Title"
                             v-model="itemModal.title"
                         >
                     </div>
 
-                    <div class="border-b border-b-2 border-primary py-2 mt-3">
+                    <div class="newtab__modal_field">
                         <input
-                            class="appearance-none bg-transparent border-none w-full text-grey-darker py-1 px-2"
+                            class="newtab__modal_input"
                             type="text"
                             placeholder="Icon"
                             v-model="itemModal.icon"
                         >
                     </div>
 
-                    <div class="border-b border-b-2 border-primary py-2 mt-3">
+                    <div class="newtab__modal_field">
                         <input
-                            class="appearance-none bg-transparent border-none w-full text-grey-darker py-1 px-2"
+                            class="newtab__modal_input"
                             type="text"
                             placeholder="Image"
                             v-model="itemModal.image"
                         >
                     </div>
 
-                    <div class="border-b border-b-2 border-primary py-2 mt-3">
+                    <div class="newtab__modal_field">
                         <input
-                            class="appearance-none bg-transparent border-none w-full text-grey-darker py-1 px-2"
+                            class="newtab__modal_input"
                             type="text"
                             placeholder="URL"
                             v-model="itemModal.url"
                         >
                     </div>
 
-                    <div class="text-right mt-6">
+                    <div class="newtab__modal_footer">
                         <button
-                            class="
-                                bg-primary hover:bg-primary-light
-                                text-white font-bold py-2 px-4 rounded
-                                border-b-4 border-primary-dark hover:border-primary
-                            "
+                            class="newtab__modal_button"
                             @click="submitItemModal()"
                             v-text="itemModal.modalName"
                         ></button>
@@ -200,39 +161,28 @@
                 </div>
             </modal>
 
-            <modal
-                name="sectionModal"
-                :width="435"
-                :height="215"
-            >
-                <div class="p-6">
-                    <div class="flex justify-between mb-6">
-                        <h1 class="text-2xl text-primary" v-text="sectionModal.modalName"></h1>
+            <modal name="sectionModal" :width="435" :height="215">
+                <div class="newtab__modal">
+                    <div class="newtab__modal_header">
+                        <h1 class="newtab__modal_title" v-text="sectionModal.modalName"></h1>
 
-                        <button
-                            class="text-primary-lighter"
-                            @click="closeSectionModal()"
-                        >
+                        <button class="newtab__modal_close" @click="closeSectionModal()">
                             <i class="fas fa-times"></i>
                         </button>
                     </div>
 
-                    <div class="border-b border-b-2 border-primary py-2 mt-3">
+                    <div class="newtab__modal_field">
                         <input
-                            class="appearance-none bg-transparent border-none w-full text-grey-darker py-1 px-2"
+                            class="newtab__modal_input"
                             type="text"
                             placeholder="Title"
                             v-model="sectionModal.title"
                         >
                     </div>
 
-                    <div class="text-right mt-6">
+                    <div class="newtab__modal_footer">
                         <button
-                            class="
-                                bg-primary hover:bg-primary-light
-                                text-white font-bold py-2 px-4 rounded
-                                border-b-4 border-primary-dark hover:border-primary
-                            "
+                            class="newtab__modal_button"
                             @click="submitSectionModal()"
                             v-text="sectionModal.modalName"
                         ></button>
@@ -240,38 +190,27 @@
                 </div>
             </modal>
 
-            <modal
-                name="importExport"
-                :width="435"
-                :height="380"
-            >
-                <div class="p-6">
-                    <div class="flex justify-between mb-6">
-                        <h1 class="text-2xl text-primary" v-text="importExportModal.title"></h1>
+            <modal name="importExport" :width="435" :height="380">
+                <div class="newtab__modal">
+                    <div class="newtab__modal_header">
+                        <h1 class="newtab__modal_title" v-text="importExportModal.title"></h1>
 
-                        <button
-                            class="text-primary-lighter"
-                            @click="closeImportExport()"
-                        >
+                        <button class="newtab__modal_close" @click="closeImportExport()">
                             <span><i class="fas fa-times"></i></span>
                         </button>
                     </div>
 
-                    <div class="border-b border-b-2 border-primary py-2 mt-3">
+                    <div class="newtab__modal_field">
                         <textarea
-                            class="appearance-none bg-transparent border-none w-full text-grey-darker py-1 px-2"
+                            class="newtab__modal_input"
                             rows="9"
                             v-model="importExportModal.data"
                         ></textarea>
                     </div>
 
-                    <div class="text-right mt-6" v-if="isImport">
+                    <div class="newtab__modal_footer" v-if="isImport">
                         <button
-                            class="
-                                bg-primary hover:bg-primary-light
-                                text-white font-bold py-2 px-4 rounded
-                                border-b-4 border-primary-dark hover:border-primary
-                            "
+                            class="newtab__modal_button"
                             @click="importJson(importExportModal.data)"
                             v-text="'Save'"
                         >
@@ -565,32 +504,3 @@ export default {
     },
 };
 </script>
-
-<style lang="scss">
-@tailwind preflight;
-@tailwind utilities;
-
-$colors: (
-    'grey', 'red', 'orange', 'yellow', 'green',
-    'teal', 'blue', 'indigo', 'purple', 'pink',
-);
-
-$tons: (
-    'darkest', 'darker', 'dark',
-    'light', 'lighter', 'lightest',
-);
-
-@each $color in $colors {
-    .app-color-#{$color} {
-        .bg-primary { @apply .bg-#{$color} }
-        .border-primary { @apply .border-#{$color} }
-        .text-primary { @apply .text-#{$color} }
-
-        @each $ton in $tons {
-            .bg-primary-#{$ton} { @apply .bg-#{$color}-#{$ton} }
-            .border-primary-#{$ton} { @apply .border-#{$color}-#{$ton} }
-            .text-primary-#{$ton} { @apply .text-#{$color}-#{$ton} }
-        }
-    }
-}
-</style>

@@ -1,0 +1,216 @@
+.newtab {
+    @apply
+        .font-sans
+        .font-normal
+        .text-black
+        .leading-normal
+        .h-screen
+        .overflow-auto;
+
+    @extend .bg-primary-darkest;
+
+    &__header {
+        @apply
+            .flex
+            .justify-between
+            .p-4
+            .pb-8;
+    }
+
+    &__title { @extend .text-primary-darker; }
+    &__subtitle { @extend .text-primary-dark; }
+
+    &__buttons {
+        @apply
+            .flex
+            .pt-2
+            .text-right;
+    }
+
+    &__button {
+        @apply
+            .py-2
+            .px-4
+            .ml-2
+            .shadow-md;
+
+        @extend .text-primary-dark;
+
+        &:hover { @extend .text-primary-light; }
+    }
+
+    &__select {
+        @apply
+            .relative
+            .shadow-md
+            .pr-4;
+
+        @extend .text-primary-dark;
+
+        select {
+            @apply
+                .appearance-none
+                .py-2
+                .pl-4
+                .pr-1
+                .bg-transparent;
+
+            @extend .text-primary-dark;
+
+            &:hover { @extend .text-primary-light; }
+        }
+
+        .fa-sort-down {
+            @apply .absolute;
+
+            top: 7px;
+            right: 7px;
+        }
+
+        &:hover { @extend .text-primary-light; }
+    }
+
+    &__section {
+        @apply
+            .p-4
+            .pb-4;
+
+        &_header {
+            @apply
+                .flex
+                .justify-between;
+        }
+
+        &_body {
+            @apply
+                .flex
+                .flex-wrap
+                .-mx-2
+                .py-2;
+        }
+    }
+
+    &__item {
+        @apply
+            .w-64
+            .p-2
+            .relative
+            .opacity-50;
+
+        &:hover { @apply .opacity-100; }
+
+        &_button {
+            @apply
+                .absolute
+                .p-1
+                .opacity-25
+                .text-grey-darker;
+
+            top: 1.25rem;
+
+            &:hover { @apply .opacity-100; }
+
+            &--edit { right: 1.25rem; }
+            &--delete { right: 2.75rem; }
+        }
+
+        &_body {
+            @apply
+                .block
+                .p-2
+                .shadow-md
+                .text-center
+                .text-xl;
+
+            @extend .bg-primary-darker;
+            @extend .text-primary-lightest;
+
+            &:hover { @apply .text-white; }
+
+        }
+
+        &_image {
+            @apply
+                .block
+                .h-32
+                .mb-1;
+
+            @extend .bg-primary;
+        }
+
+        &_icon {
+            @apply
+                .block
+                .h-32
+                .mb-1
+                .py-3;
+
+            @extend .bg-primary;
+        }
+    }
+
+    &__modal {
+        @apply .p-6;
+
+        &_header {
+            @apply
+                .flex
+                .justify-between
+                .mb-6;
+        }
+
+        &_title {
+            @apply .text-2xl;
+            @extend .text-primary;
+        }
+
+        &_close {
+            @extend .text-primary-lighter;
+        }
+
+        &_field {
+            @apply
+                .border-b
+                .border-b-2
+                .py-2
+                .mt-3;
+
+            @extend .border-primary;
+        }
+
+        &_input {
+            @apply
+                .appearance-none
+                .bg-transparent
+                .border-none
+                .w-full
+                .text-grey-darker
+                .py-1
+                .px-2;
+        }
+
+        &_footer {
+            @apply
+                .text-right
+                .mt-6;
+        }
+
+        &_button {
+            @apply
+                .text-white
+                .font-bold
+                .py-2
+                .px-4
+                .rounded
+                .border-b-4;
+
+            @extend .bg-primary;
+            @extend .border-primary-dark;
+
+            &:hover {
+                @extend .bg-primary-light;
+                @extend .border-primary;
+            }
+        }
+    }
+}
