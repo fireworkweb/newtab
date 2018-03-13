@@ -1,5 +1,7 @@
 # Newtab
 
+[![Build Status](https://travis-ci.org/fireworkweb/newtab.svg?branch=master)](https://travis-ci.org/fireworkweb/newtab)
+
 Newtab is the easiest way to manage and access your pages. Only one click away!
 
 ### Installation
