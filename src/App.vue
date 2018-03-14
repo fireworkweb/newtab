@@ -35,77 +35,79 @@
                 </div>
             </div>
 
-            <div
-                v-for="(section, sectionKey) in sections"
-                :key="sectionKey"
-                class="newtab__section"
-            >
-                <div class="newtab__section_header">
-                    <h2 class="newtab__subtitle">{{ section.title }}</h2>
+            <draggable :list="sections">
+                <div
+                    v-for="(section, sectionKey) in sections"
+                    :key="sectionKey"
+                    class="newtab__section"
+                >
+                    <div class="newtab__section_header">
+                        <h2 class="newtab__subtitle">{{ section.title }}</h2>
 
-                    <div class="newtab__buttons">
-                        <button
-                            class="newtab__button"
-                            title="Delete Section"
-                            @click="removeSection(sectionKey)"
-                        >
-                            <i class="fas fa-trash-alt"></i>
-                        </button>
-
-                        <button
-                            class="newtab__button"
-                            title="Edit Section"
-                            @click="openSectionModal(sectionKey)"
-                        >
-                            <i class="fas fa-edit"></i>
-                        </button>
-
-                        <button
-                            class="newtab__button"
-                            @click="openItemModal(sectionKey)"
-                            v-text="'Add Item'"
-                        >
-                            <i class="fas fa-plus"></i>
-                        </button>
-                    </div>
-                </div>
-
-                <div class="newtab__section_body">
-                    <draggable :list="section.items">
-                        <div
-                            class="newtab__item"
-                            v-for="(item, itemKey) in section.items"
-                            :key="itemKey"
-                        >
+                        <div class="newtab__buttons">
                             <button
-                                class="newtab__item_button newtab__item_button--delete"
-                                @click="removeItem(sectionKey, itemKey)"
+                                class="newtab__button"
+                                title="Delete Section"
+                                @click="removeSection(sectionKey)"
                             >
                                 <i class="fas fa-trash-alt"></i>
                             </button>
 
                             <button
-                                class="newtab__item_button newtab__item_button--edit"
-                                @click="openItemModal(sectionKey, itemKey)"
+                                class="newtab__button"
+                                title="Edit Section"
+                                @click="openSectionModal(sectionKey)"
                             >
                                 <i class="fas fa-edit"></i>
                             </button>
 
-                            <a class="newtab__item_body" :href="item.url">
-                                <span v-if="item.image" class="newtab__item_image">
-                                    <img :src="item.image">
-                                </span>
-
-                                <span v-if="item.icon" class="newtab__item_icon">
-                                    <i class="fa-5x" :class="item.icon"></i>
-                                </span>
-
-                                <span v-if="item.title" v-text="item.title"></span>
-                            </a>
+                            <button
+                                class="newtab__button"
+                                @click="openItemModal(sectionKey)"
+                                v-text="'Add Item'"
+                            >
+                                <i class="fas fa-plus"></i>
+                            </button>
                         </div>
-                    </draggable>
+                    </div>
+
+                    <div class="newtab__section_body">
+                        <draggable :list="section.items">
+                            <div
+                                class="newtab__item"
+                                v-for="(item, itemKey) in section.items"
+                                :key="itemKey"
+                            >
+                                <button
+                                    class="newtab__item_button newtab__item_button--delete"
+                                    @click="removeItem(sectionKey, itemKey)"
+                                >
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+
+                                <button
+                                    class="newtab__item_button newtab__item_button--edit"
+                                    @click="openItemModal(sectionKey, itemKey)"
+                                >
+                                    <i class="fas fa-edit"></i>
+                                </button>
+
+                                <a class="newtab__item_body" :href="item.url">
+                                    <span v-if="item.image" class="newtab__item_image">
+                                        <img :src="item.image">
+                                    </span>
+
+                                    <span v-if="item.icon" class="newtab__item_icon">
+                                        <i class="fa-5x" :class="item.icon"></i>
+                                    </span>
+
+                                    <span v-if="item.title" v-text="item.title"></span>
+                                </a>
+                            </div>
+                        </draggable>
+                    </div>
                 </div>
-            </div>
+            </draggable>
 
             <modal
                 name="itemModal"

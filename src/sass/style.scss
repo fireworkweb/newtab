@@ -18,7 +18,11 @@
     }
 
     &__title { @extend .text-primary-darker; }
-    &__subtitle { @extend .text-primary-dark; }
+
+    &__subtitle {
+        @apply .cursor-move;
+        @extend .text-primary-dark;
+    }
 
     &__buttons {
         @apply
