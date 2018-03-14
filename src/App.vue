@@ -247,7 +247,7 @@
 
                     <div class="newtab__modal_field">
                         <textarea
-                            id="export"
+                            ref="export"
                             class="newtab__modal_input"
                             rows="9"
                             v-model="exportModal.data"
@@ -259,8 +259,7 @@
                             class="newtab__modal_button"
                             @click="copyToClipboard()"
                             v-text="'Copy to clipboard'"
-                        >
-                        </button>
+                        ></button>
                     </div>
                 </div>
             </modal>
@@ -535,7 +534,7 @@ export default {
         },
 
         copyToClipboard () {
-            document.getElementById("export").select();
+            this.$refs.export.select();
             document.execCommand("Copy");
 
             this.closeExport();
