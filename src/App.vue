@@ -75,7 +75,8 @@
                         <div
                             class="newtab__item"
                             v-for="(item, itemKey) in section.items"
-                            :key="itemKey">
+                            :key="itemKey"
+                        >
                             <button
                                 class="newtab__item_button newtab__item_button--delete"
                                 @click="removeItem(sectionKey, itemKey)"
