@@ -97,7 +97,7 @@
                                 </span>
 
                                 <span v-if="item.icon" class="newtab__item_icon">
-                                    <i :class="`fa-5x ${item.icon}`"></i>
+                                    <i class="fa-5x" :class="item.icon"></i>
                                 </span>
 
                                 <span v-if="item.title" v-text="item.title"></span>
