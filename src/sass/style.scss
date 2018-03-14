@@ -18,7 +18,11 @@
     }
 
     &__title { @extend .text-primary-darker; }
-    &__subtitle { @extend .text-primary-dark; }
+
+    &__subtitle {
+        @apply .cursor-move;
+        @extend .text-primary-dark;
+    }
 
     &__buttons {
         @apply
@@ -95,6 +99,7 @@
             .w-64
             .p-2
             .relative
+            .inline-block
             .opacity-50;
 
         &:hover { @apply .opacity-100; }
