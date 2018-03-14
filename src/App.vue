@@ -199,15 +199,15 @@
             </modal>
 
             <modal
-                name="importExport"
+                name="importModal"
                 :width="435"
                 :height="380"
             >
                 <div class="newtab__modal">
                     <div class="newtab__modal_header">
-                        <h1 class="newtab__modal_title" v-text="importExportModal.title"></h1>
+                        <h1 class="newtab__modal_title" v-text="'Import'"></h1>
 
-                        <button class="newtab__modal_close" @click="closeImportExport()">
+                        <button class="newtab__modal_close" @click="closeImport()">
                             <span><i class="fas fa-times"></i></span>
                         </button>
                     </div>
@@ -216,17 +216,50 @@
                         <textarea
                             class="newtab__modal_input"
                             rows="9"
-                            v-model="importExportModal.data"
+                            v-model="importModal.data"
                         ></textarea>
                     </div>
 
-                    <div class="newtab__modal_footer" v-if="isImport">
+                    <div class="newtab__modal_footer">
                         <button
                             class="newtab__modal_button"
-                            @click="importJson(importExportModal.data)"
+                            @click="importJson()"
                             v-text="'Save'"
                         >
                         </button>
+                    </div>
+                </div>
+            </modal>
+
+            <modal
+                name="exportModal"
+                :width="435"
+                :height="380"
+            >
+                <div class="newtab__modal">
+                    <div class="newtab__modal_header">
+                        <h1 class="newtab__modal_title" v-text="'Export'"></h1>
+
+                        <button class="newtab__modal_close" @click="closeExport()">
+                            <span><i class="fas fa-times"></i></span>
+                        </button>
+                    </div>
+
+                    <div class="newtab__modal_field">
+                        <textarea
+                            ref="export"
+                            class="newtab__modal_input"
+                            rows="9"
+                            v-model="exportModal.data"
+                        ></textarea>
+                    </div>
+
+                    <div class="newtab__modal_footer">
+                        <button
+                            class="newtab__modal_button"
+                            @click="copyToClipboard()"
+                            v-text="'Copy to clipboard'"
+                        ></button>
                     </div>
                 </div>
             </modal>
@@ -257,12 +290,13 @@ export default {
             title: '',
         },
 
-        importExportModal: {
+        importModal: {
             data: '',
-            title: '',
         },
 
-        isImport: false,
+        exportModal: {
+            data: '',
+        },
 
         sections: [
             {
@@ -443,10 +477,7 @@ export default {
         },
 
         openImport () {
-            this.importExportModal.title = 'Import';
-            this.isImport = true;
-
-            this.$modal.show('importExport');
+            this.$modal.show('importModal');
         },
 
         openExport () {
@@ -455,14 +486,13 @@ export default {
                 theme: this.theme,
             };
 
-            this.importExportModal.title = 'Export';
-            this.importExportModal.data = JSON.stringify(storage);
+            this.exportModal.data = JSON.stringify(storage);
 
-            this.$modal.show('importExport');
+            this.$modal.show('exportModal');
         },
 
-        importJson (newStorage) {
-            let importText = JSON.parse(newStorage);
+        importJson () {
+            let importText = JSON.parse(this.importModal.data);
 
             if (this.themes.indexOf(importText.theme) !== -1) {
                 this.theme = importText.theme;
@@ -490,14 +520,24 @@ export default {
 
             this.sections = sections;
 
-            this.closeImportExport();
+            this.closeImport();
         },
 
-        closeImportExport () {
-            this.isImport = false;
-            this.importExportModal.data = '';
+        closeImport () {
+            this.importModal.data = '';
+            this.$modal.hide('importModal');
+        },
 
-            this.$modal.hide('importExport');
+        closeExport () {
+            this.exportModal.data = '';
+            this.$modal.hide('exportModal');
+        },
+
+        copyToClipboard () {
+            this.$refs.export.select();
+            document.execCommand('Copy');
+
+            this.closeExport();
         },
 
         reset () {
