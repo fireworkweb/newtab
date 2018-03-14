@@ -223,7 +223,7 @@
                     <div class="newtab__modal_footer">
                         <button
                             class="newtab__modal_button"
-                            @click="importJson(importModal.data)"
+                            @click="importJson()"
                             v-text="'Save'"
                         >
                         </button>
@@ -491,8 +491,8 @@ export default {
             this.$modal.show('exportModal');
         },
 
-        importJson (newStorage) {
-            let importText = JSON.parse(newStorage);
+        importJson () {
+            let importText = JSON.parse(this.importModal.data);
 
             if (this.themes.indexOf(importText.theme) !== -1) {
                 this.theme = importText.theme;
@@ -535,7 +535,7 @@ export default {
 
         copyToClipboard () {
             this.$refs.export.select();
-            document.execCommand("Copy");
+            document.execCommand('Copy');
 
             this.closeExport();
         },
