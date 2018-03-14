@@ -71,37 +71,38 @@
                 </div>
 
                 <div class="newtab__section_body">
-                    <div
-                        class="newtab__item"
-                        v-for="(item, itemKey) in section.items"
-                        :key="itemKey"
-                    >
-                        <button
-                            class="newtab__item_button newtab__item_button--delete"
-                            @click="removeItem(sectionKey, itemKey)"
-                        >
-                            <i class="fas fa-trash-alt"></i>
-                        </button>
+                    <draggable :list="section.items">
+                        <div
+                            class="newtab__item"
+                            v-for="(item, itemKey) in section.items"
+                            :key="itemKey">
+                            <button
+                                class="newtab__item_button newtab__item_button--delete"
+                                @click="removeItem(sectionKey, itemKey)"
+                            >
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
 
-                        <button
-                            class="newtab__item_button newtab__item_button--edit"
-                            @click="openItemModal(sectionKey, itemKey)"
-                        >
-                            <i class="fas fa-edit"></i>
-                        </button>
+                            <button
+                                class="newtab__item_button newtab__item_button--edit"
+                                @click="openItemModal(sectionKey, itemKey)"
+                            >
+                                <i class="fas fa-edit"></i>
+                            </button>
 
-                        <a class="newtab__item_body" :href="item.url">
-                            <span v-if="item.image" class="newtab__item_image">
-                                <img :src="item.image">
-                            </span>
+                            <a class="newtab__item_body" :href="item.url">
+                                <span v-if="item.image" class="newtab__item_image">
+                                    <img :src="item.image">
+                                </span>
 
-                            <span v-if="item.icon" class="newtab__item_icon">
-                                <i :class="`fa-5x ${item.icon}`"></i>
-                            </span>
+                                <span v-if="item.icon" class="newtab__item_icon">
+                                    <i :class="`fa-5x ${item.icon}`"></i>
+                                </span>
 
-                            <span v-if="item.title" v-text="item.title"></span>
-                        </a>
-                    </div>
+                                <span v-if="item.title" v-text="item.title"></span>
+                            </a>
+                        </div>
+                    </draggable>
                 </div>
             </div>
 
@@ -269,8 +270,10 @@
 
 <script>
 import SaveState from 'vue-save-state';
+import draggable from 'vuedraggable';
 
 export default {
+    components: { draggable },
     mixins: [ SaveState ],
 
     data: () => ({

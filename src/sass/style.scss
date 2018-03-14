@@ -95,6 +95,7 @@
             .w-64
             .p-2
             .relative
+            .inline-block
             .opacity-50;
 
         &:hover { @apply .opacity-100; }
