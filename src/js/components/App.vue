@@ -470,8 +470,7 @@
                             class="newtab__modal_button"
                             @click="importJson()"
                             v-text="'Save'"
-                        >
-                        </button>
+                        ></button>
                     </div>
                 </div>
             </modal>
