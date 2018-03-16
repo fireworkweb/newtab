@@ -460,6 +460,7 @@
                     <div class="newtab__modal_field">
                         <textarea
                             class="newtab__modal_input"
+                            placeholder="Insert your json here"
                             rows="9"
                             v-model="importModal.data"
                         ></textarea>
@@ -495,6 +496,7 @@
                             class="newtab__modal_input"
                             rows="9"
                             v-model="exportModal.data"
+                            readonly
                         ></textarea>
                     </div>
 
