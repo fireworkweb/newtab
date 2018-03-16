@@ -35,10 +35,113 @@
                 </div>
             </div>
 
+            <!-- <draggable :list="sections">
+            </draggable> -->
+
             <draggable :list="sections">
                 <div
                     v-for="(section, sectionKey) in sections"
                     :key="sectionKey"
+                    class="newtab__section"
+                    v-if="section.type === 'birthday'"
+                >
+                    <div class="newtab__section_header">
+                        <h2 class="newtab__subtitle" v-text="section.title"></h2>
+
+                        <div class="newtab__buttons">
+                            <button
+                                class="newtab__button"
+                                title="Delete Section"
+                                @click="removeSection(sectionKey)"
+                            >
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+
+                            <button
+                                class="newtab__button"
+                                title="Edit Section"
+                                @click="openSectionModal(sectionKey)"
+                            >
+                                <i class="fas fa-edit"></i>
+                            </button>
+
+                            <button
+                                class="newtab__button"
+                                title="See all"
+                                @click="openSeeAllBirthdays(sectionKey)"
+                                v-text="'See all'"
+                            >
+                                <i class="fas fa-plus"></i>
+                            </button>
+
+                            <button
+                                class="newtab__button"
+                                title="Add new birthday"
+                                @click="openAddBirthdayModal(sectionKey)"
+                                v-text="'Add New'"
+                            >
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="newtab__section_body">
+                        <draggable :list="section.items">
+                            <div class="newtab__item">
+                                <a
+                                    class="newtab__item_body newtab__item_body--birthday"
+                                    @click="openBirthdaysMonthModal(sectionKey)"
+                                >
+                                    <span
+                                        v-if="getMonth(section.items).length > 0"
+                                        class="newtab__item_text"
+                                    >
+                                        <p
+                                            v-for="item in getMonth(section.items)"
+                                            v-text="item.name"
+                                        ></p>
+                                    </span>
+
+                                    <span v-else class="newtab__item_icon">
+                                        <p>No</p>
+                                        <i class="fa-2x fas fa-birthday-cake"></i>
+                                        <p>this month</p>
+                                    </span>
+
+                                    <span v-text="'Month'"></span>
+                                </a>
+                            </div>
+
+                            <div class="newtab__item">
+                                <a class="newtab__item_body">
+                                    <span
+                                        v-if="getToday(section.items).length > 0"
+                                        class="newtab__item_text"
+                                    >
+                                        <p
+                                            v-for="(item, itemKey) in getToday(section.items)"
+                                            :key="itemKey"
+                                            v-text="item.name"
+                                        ></p>
+                                    </span>
+
+                                    <span v-else class="newtab__item_icon">
+                                        <p>No</p>
+                                        <i class="fa-2x fas fa-birthday-cake"></i>
+                                        <p>today</p>
+                                    </span>
+
+                                    <span v-text="'Today'"></span>
+                                </a>
+                            </div>
+                        </draggable>
+                    </div>
+                </div>
+
+                <div
+                    v-for="(section, sectionKey) in sections"
+                    :key="sectionKey"
+                    v-if="section.type === 'link'"
                     class="newtab__section"
                 >
                     <div class="newtab__section_header">
@@ -108,6 +211,105 @@
                     </div>
                 </div>
             </draggable>
+
+            <modal
+                name="birthdayMonthModal"
+                :width="435"
+                :height="400"
+            >
+                <div class="newtab__modal">
+                    <div class="newtab__modal_header">
+                        <h1 class="newtab__modal_title" v-text="'Birthdays of the Month'"></h1>
+
+                        <button class="newtab__modal_close" @click="closeBirthdaysMonthModal()">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+
+                    <div class="newtab__modal_body">
+                        <div
+                            v-for="person in birthdayMonthModal"
+                            class="newtab__modal_field">
+                            {{ person.name + ' - ' + person.date }}
+                        </div>
+                    </div>
+                </div>
+            </modal>
+
+            <modal
+                name="seeAllModal"
+                :width="435"
+                :height="400"
+            >
+                <div class="newtab__modal">
+                    <div class="newtab__modal_header">
+                        <h1 class="newtab__modal_title" v-text="'See all'"></h1>
+
+                        <button class="newtab__modal_close" @click="closeSeeAllBirthdays()">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+
+                    <div class="newtab__modal_body">
+                        <div
+                            v-for="(person, personKey) in allBirthdayModal"
+                            :key="personKey"
+                            class="newtab__modal_field newtab__modal_field--modalAll">
+                            {{ person.name + ' - ' + person.date }}
+
+                            <button
+                                class="newtab__button newtab__button--modalAll"
+                                title="Delete Person"
+                                @click="removePerson(personKey)"
+                            >
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </modal>
+
+            <modal
+                name="birthdayModal"
+                :width="435"
+                :height="280"
+            >
+                <div class="newtab__modal">
+                    <div class="newtab__modal_header">
+                        <h1 class="newtab__modal_title" v-text="birthdayModal.modalName"></h1>
+
+                        <button class="newtab__modal_close" @click="closeAddBirthdayModal()">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+
+                    <div class="newtab__modal_field">
+                        <input
+                            class="newtab__modal_input"
+                            type="text"
+                            placeholder="Name"
+                            v-model="birthdayModal.name"
+                        >
+                    </div>
+
+                    <div class="newtab__modal_field">
+                        <input
+                            class="newtab__modal_input"
+                            type="text"
+                            placeholder="Date (01-01)"
+                            v-model="birthdayModal.date"
+                        >
+                    </div>
+
+                    <div class="newtab__modal_footer">
+                        <button
+                            class="newtab__modal_button"
+                            @click="submitBirthdayModal()"
+                            v-text="birthdayModal.modalName"
+                        ></button>
+                    </div>
+                </div>
+            </modal>
 
             <modal
                 name="itemModal"
@@ -304,9 +506,108 @@ export default {
             data: '',
         },
 
+        birthdayModal: {
+            sectionKey: null,
+            itemKey: null,
+            name: '',
+            date: '',
+            modalName: '',
+        },
+
+        birthdayMonthModal : [],
+
+        allBirthdayModal : [],
+
         sections: [
             {
+                title: 'Birthdays',
+                type: 'birthday',
+                items: [
+                    {
+                        name: 'Barbara Carvalho',
+                        date: '22-03',
+                    },
+                    {
+                        name: 'Bruna Rubio',
+                        date: '18-03',
+                    },
+                    {
+                        name: 'Carlos Bastos',
+                        date: '27-12',
+                    },
+                    {
+                        name: 'Daniel Polito',
+                        date: '06-02',
+                    },
+                    {
+                        name: 'Douglas Gálico',
+                        date: '06-02',
+                    },
+                    {
+                        name: 'Eduardo Bojikian',
+                        date: '02-12',
+                    },
+                    {
+                        name: 'Eduardo Redressa',
+                        date: '06-04',
+                    },
+                    {
+                        name: 'Fabrício Souza',
+                        date: '10-01',
+                    },
+                    {
+                        name: 'Fellipe Rocha',
+                        date: '',
+                    },
+                    {
+                        name: 'Fernando Hideo',
+                        date: '03-04',
+                    },
+                    {
+                        name: 'Gabriel Oliveira',
+                        date: '17-11',
+                    },
+                    {
+                        name: 'Juliana Ferreira',
+                        date: '11-10',
+                    },
+                    {
+                        name: 'Karoline Kimiko',
+                        date: '21-04',
+                    },
+                    {
+                        name: 'Leandro Brito',
+                        date: '13-07',
+                    },
+                    {
+                        name: 'Matheus William',
+                        date: '16-04',
+                    },
+                    {
+                        name: 'Matheus Solha',
+                        date: '24-08',
+                    },
+                    {
+                        name: 'Ricardo Carneiro',
+                        date: '23-02',
+                    },
+                    {
+                        name: 'Tiago Silva',
+                        date: '22-05',
+                    },
+                    {
+                        name: 'Vinicius Lopes',
+                        date: '08-02',
+                    },
+                    {
+                        name: 'Wesley Francisco',
+                        date: '19-10',
+                    },
+                ],
+            },
+            {
                 title: 'Work',
+                type: 'link',
                 items: [
                     {
                         url: 'https://calendar.google.com/calendar/r',
@@ -347,6 +648,7 @@ export default {
             },
             {
                 title: 'Fun',
+                type: 'link',
                 items: [
                     {
                         url: 'https://calendar.google.com/calendar/r',
@@ -386,6 +688,73 @@ export default {
     }),
 
     methods: {
+        getMonth (birthdays) {
+            let date = new Date();
+
+            return birthdays.filter(birthday => {
+                return birthday.date.split('-')[1] == date.getMonth() + 1;
+            });
+        },
+
+        getToday (birthdays) {
+            let date = new Date();
+
+            return birthdays.filter(birthday => {
+                return birthday.date.split('-')[0] == date.getDate() && birthday.date.split('-')[1] == date.getMonth() + 1;
+            });
+        },
+
+        removePerson (personKey) {
+            if (confirm('Delete person?')) {
+                this.sections[this.birthdayModal.sectionKey].items.splice(personKey, 1);
+            }
+        },
+
+        openSeeAllBirthdays (sectionKey) {
+            this.allBirthdayModal = this.sections[sectionKey].items;
+            this.birthdayModal.sectionKey = sectionKey;
+
+            this.$modal.show('seeAllModal');
+        },
+
+        closeSeeAllBirthdays () {
+            this.$modal.hide('seeAllModal');
+        },
+
+        openAddBirthdayModal (sectionKey) {
+            this.birthdayModal.sectionKey = sectionKey;
+            this.birthdayModal.modalName = 'Add new birthday';
+
+            this.$modal.show('birthdayModal');
+        },
+
+        submitBirthdayModal () {
+            let sectionKey = this.birthdayModal.sectionKey,
+                section = this.sections[sectionKey],
+                item = {
+                    name: this.birthdayModal.name,
+                    date: this.birthdayModal.date,
+                };
+
+            section.items.push(item);
+
+            this.closeAddBirthdayModal();
+        },
+
+        closeAddBirthdayModal () {
+            this.$modal.hide('birthdayModal');
+        },
+
+        openBirthdaysMonthModal (sectionKey) {
+            this.birthdayMonthModal = this.getMonth(this.sections[sectionKey].items);
+
+            this.$modal.show('birthdayMonthModal');
+        },
+
+        closeBirthdaysMonthModal () {
+            this.$modal.hide('birthdayMonthModal');
+        },
+
         openItemModal (sectionKey, itemKey) {
             this.itemModal.modalName = itemKey !== undefined ? 'Edit Item' : 'Add Item';
 
