@@ -35,179 +35,173 @@
                 </div>
             </div>
 
-            <!-- <draggable :list="sections">
-            </draggable> -->
-
             <draggable :list="sections">
                 <div
                     v-for="(section, sectionKey) in sections"
                     :key="sectionKey"
                     class="newtab__section"
-                    v-if="section.type === 'birthday'"
                 >
-                    <div class="newtab__section_header">
-                        <h2 class="newtab__subtitle" v-text="section.title"></h2>
+                    <div v-if="section.type === 'birthday'">
+                        <div class="newtab__section_header">
+                            <h2 class="newtab__subtitle" v-text="section.title"></h2>
 
-                        <div class="newtab__buttons">
-                            <button
-                                class="newtab__button"
-                                title="Delete Section"
-                                @click="removeSection(sectionKey)"
-                            >
-                                <i class="fas fa-trash-alt"></i>
-                            </button>
-
-                            <button
-                                class="newtab__button"
-                                title="Edit Section"
-                                @click="openSectionModal(sectionKey)"
-                            >
-                                <i class="fas fa-edit"></i>
-                            </button>
-
-                            <button
-                                class="newtab__button"
-                                title="See all"
-                                @click="openSeeAllBirthdays(sectionKey)"
-                                v-text="'See all'"
-                            >
-                                <i class="fas fa-plus"></i>
-                            </button>
-
-                            <button
-                                class="newtab__button"
-                                title="Add new birthday"
-                                @click="openAddBirthdayModal(sectionKey)"
-                                v-text="'Add New'"
-                            >
-                                <i class="fas fa-plus"></i>
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="newtab__section_body">
-                        <draggable :list="section.items">
-                            <div class="newtab__item">
-                                <a
-                                    class="newtab__item_body newtab__item_body--birthday"
-                                    @click="openBirthdaysMonthModal(sectionKey)"
-                                >
-                                    <span
-                                        v-if="getMonth(section.items).length > 0"
-                                        class="newtab__item_text"
-                                    >
-                                        <p
-                                            v-for="item in getMonth(section.items)"
-                                            v-text="item.name"
-                                        ></p>
-                                    </span>
-
-                                    <span v-else class="newtab__item_icon">
-                                        <p>No</p>
-                                        <i class="fa-2x fas fa-birthday-cake"></i>
-                                        <p>this month</p>
-                                    </span>
-
-                                    <span v-text="'Month'"></span>
-                                </a>
-                            </div>
-
-                            <div class="newtab__item">
-                                <a class="newtab__item_body">
-                                    <span
-                                        v-if="getToday(section.items).length > 0"
-                                        class="newtab__item_text"
-                                    >
-                                        <p
-                                            v-for="(item, itemKey) in getToday(section.items)"
-                                            :key="itemKey"
-                                            v-text="item.name"
-                                        ></p>
-                                    </span>
-
-                                    <span v-else class="newtab__item_icon">
-                                        <p>No</p>
-                                        <i class="fa-2x fas fa-birthday-cake"></i>
-                                        <p>today</p>
-                                    </span>
-
-                                    <span v-text="'Today'"></span>
-                                </a>
-                            </div>
-                        </draggable>
-                    </div>
-                </div>
-
-                <div
-                    v-for="(section, sectionKey) in sections"
-                    :key="sectionKey"
-                    v-if="section.type === 'link'"
-                    class="newtab__section"
-                >
-                    <div class="newtab__section_header">
-                        <h2 class="newtab__subtitle">{{ section.title }}</h2>
-
-                        <div class="newtab__buttons">
-                            <button
-                                class="newtab__button"
-                                title="Delete Section"
-                                @click="removeSection(sectionKey)"
-                            >
-                                <i class="fas fa-trash-alt"></i>
-                            </button>
-
-                            <button
-                                class="newtab__button"
-                                title="Edit Section"
-                                @click="openSectionModal(sectionKey)"
-                            >
-                                <i class="fas fa-edit"></i>
-                            </button>
-
-                            <button
-                                class="newtab__button"
-                                @click="openItemModal(sectionKey)"
-                                v-text="'Add Item'"
-                            >
-                                <i class="fas fa-plus"></i>
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="newtab__section_body">
-                        <draggable :list="section.items">
-                            <div
-                                class="newtab__item"
-                                v-for="(item, itemKey) in section.items"
-                                :key="itemKey"
-                            >
+                            <div class="newtab__buttons">
                                 <button
-                                    class="newtab__item_button newtab__item_button--delete"
-                                    @click="removeItem(sectionKey, itemKey)"
+                                    class="newtab__button"
+                                    title="Delete Section"
+                                    @click="removeSection(sectionKey)"
                                 >
                                     <i class="fas fa-trash-alt"></i>
                                 </button>
 
                                 <button
-                                    class="newtab__item_button newtab__item_button--edit"
-                                    @click="openItemModal(sectionKey, itemKey)"
+                                    class="newtab__button"
+                                    title="Edit Section"
+                                    @click="openSectionModal(sectionKey)"
                                 >
                                     <i class="fas fa-edit"></i>
                                 </button>
 
-                                <a class="newtab__item_body" :href="item.url">
-                                    <span v-if="item.image" class="newtab__item_image">
-                                        <img :src="item.image">
-                                    </span>
+                                <button
+                                    class="newtab__button"
+                                    title="See all"
+                                    @click="openSeeAllBirthdays(sectionKey)"
+                                    v-text="'See all'"
+                                >
+                                    <i class="fas fa-plus"></i>
+                                </button>
 
-                                    <span v-if="item.icon" class="newtab__item_icon">
-                                        <i class="fa-5x" :class="item.icon"></i>
-                                    </span>
-
-                                    <span v-if="item.title" v-text="item.title"></span>
-                                </a>
+                                <button
+                                    class="newtab__button"
+                                    title="Add new birthday"
+                                    @click="openAddBirthdayModal(sectionKey)"
+                                    v-text="'Add New'"
+                                >
+                                    <i class="fas fa-plus"></i>
+                                </button>
                             </div>
-                        </draggable>
+                        </div>
+
+                        <div class="newtab__section_body">
+                            <draggable :list="section.items">
+                                <div class="newtab__item">
+                                    <a
+                                        class="newtab__item_body newtab__item_body--birthday"
+                                        @click="openBirthdaysMonthModal(sectionKey)"
+                                    >
+                                        <span
+                                            v-if="getMonth(section.items).length > 0"
+                                            class="newtab__item_text"
+                                        >
+                                            <p
+                                                v-for="(item, itemKey) in getMonth(section.items)"
+                                                :key="itemKey"
+                                                v-text="item.name"
+                                            ></p>
+                                        </span>
+
+                                        <span v-else class="newtab__item_icon">
+                                            <p>No</p>
+                                            <i class="fa-2x fas fa-birthday-cake"></i>
+                                            <p>this month</p>
+                                        </span>
+
+                                        <span v-text="'Month'"></span>
+                                    </a>
+                                </div>
+
+                                <div class="newtab__item">
+                                    <a class="newtab__item_body">
+                                        <span
+                                            v-if="getToday(section.items).length > 0"
+                                            class="newtab__item_text"
+                                        >
+                                            <p
+                                                v-for="(item, itemKey) in getToday(section.items)"
+                                                :key="itemKey"
+                                                v-text="item.name"
+                                            ></p>
+                                        </span>
+
+                                        <span v-else class="newtab__item_icon">
+                                            <p>No</p>
+                                            <i class="fa-2x fas fa-birthday-cake"></i>
+                                            <p>today</p>
+                                        </span>
+
+                                        <span v-text="'Today'"></span>
+                                    </a>
+                                </div>
+                            </draggable>
+                        </div>
+                    </div>
+
+                    <div v-if="section.type === 'link'">
+                        <div class="newtab__section_header">
+                            <h2 class="newtab__subtitle">{{ section.title }}</h2>
+
+                            <div class="newtab__buttons">
+                                <button
+                                    class="newtab__button"
+                                    title="Delete Section"
+                                    @click="removeSection(sectionKey)"
+                                >
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+
+                                <button
+                                    class="newtab__button"
+                                    title="Edit Section"
+                                    @click="openSectionModal(sectionKey)"
+                                >
+                                    <i class="fas fa-edit"></i>
+                                </button>
+
+                                <button
+                                    class="newtab__button"
+                                    @click="openItemModal(sectionKey)"
+                                    v-text="'Add Item'"
+                                >
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="newtab__section_body">
+                            <draggable :list="section.items">
+                                <div
+                                    class="newtab__item"
+                                    v-for="(item, itemKey) in section.items"
+                                    :key="itemKey"
+                                >
+                                    <button
+                                        class="newtab__item_button newtab__item_button--delete"
+                                        @click="removeItem(sectionKey, itemKey)"
+                                    >
+                                        <i class="fas fa-trash-alt"></i>
+                                    </button>
+
+                                    <button
+                                        class="newtab__item_button newtab__item_button--edit"
+                                        @click="openItemModal(sectionKey, itemKey)"
+                                    >
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+
+                                    <a class="newtab__item_body" :href="item.url">
+                                        <span v-if="item.image" class="newtab__item_image">
+                                            <img :src="item.image">
+                                        </span>
+
+                                        <span v-if="item.icon" class="newtab__item_icon">
+                                            <i class="fa-5x" :class="item.icon"></i>
+                                        </span>
+
+                                        <span v-if="item.title" v-text="item.title"></span>
+                                    </a>
+                                </div>
+                            </draggable>
+                        </div>
                     </div>
                 </div>
             </draggable>
@@ -228,7 +222,8 @@
 
                     <div class="newtab__modal_body">
                         <div
-                            v-for="person in birthdayMonthModal"
+                            v-for="(person, personKey) in birthdayMonthModal"
+                            :key="personKey"
                             class="newtab__modal_field">
                             {{ person.name + ' - ' + person.date }}
                         </div>
@@ -692,7 +687,7 @@ export default {
             let date = new Date();
 
             return birthdays.filter(birthday => {
-                return birthday.date.split('-')[1] == date.getMonth() + 1;
+                return Number(birthday.date.split('-')[1]) === date.getMonth() + 1;
             });
         },
 
@@ -700,7 +695,7 @@ export default {
             let date = new Date();
 
             return birthdays.filter(birthday => {
-                return birthday.date.split('-')[0] == date.getDate() && birthday.date.split('-')[1] == date.getMonth() + 1;
+                return Number(birthday.date.split('-')[0]) === date.getDate() && Number(birthday.date.split('-')[1]) === date.getMonth() + 1;
             });
         },
 
