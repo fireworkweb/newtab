@@ -42,7 +42,7 @@
 
         &:hover { @extend .text-primary-light; }
 
-        &--modalAll {
+        &--modal {
             @apply
                 .shadow-none
                 .absolute
@@ -210,7 +210,7 @@
 
             @extend .border-primary;
 
-            &--modalAll { @apply .relative; }
+            &--modal { @apply .relative; }
         }
 
         &_input {

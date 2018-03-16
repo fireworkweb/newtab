@@ -64,20 +64,29 @@
 
                                 <button
                                     class="newtab__button"
+                                    title="Import birthdays"
+                                    @click="openImportBirthdayModal(sectionKey)"
+                                >
+                                    <i class="fas fa-download"></i>
+                                    Import birthdays
+                                </button>
+
+                                <button
+                                    class="newtab__button"
                                     title="See all"
                                     @click="openSeeAllBirthdays(sectionKey)"
-                                    v-text="'See all'"
                                 >
-                                    <i class="fas fa-plus"></i>
+                                    <i class="fas fa-eye"></i>
+                                    See all
                                 </button>
 
                                 <button
                                     class="newtab__button"
                                     title="Add new birthday"
                                     @click="openAddBirthdayModal(sectionKey)"
-                                    v-text="'Add New'"
                                 >
                                     <i class="fas fa-plus"></i>
+                                    Add New
                                 </button>
                             </div>
                         </div>
@@ -111,7 +120,7 @@
                                 </div>
 
                                 <div class="newtab__item">
-                                    <a class="newtab__item_body">
+                                    <div class="newtab__item_body">
                                         <span
                                             v-if="getToday(section.items).length > 0"
                                             class="newtab__item_text"
@@ -130,7 +139,7 @@
                                         </span>
 
                                         <span v-text="'Today'"></span>
-                                    </a>
+                                    </div>
                                 </div>
                             </draggable>
                         </div>
@@ -138,7 +147,7 @@
 
                     <div v-if="section.type === 'link'">
                         <div class="newtab__section_header">
-                            <h2 class="newtab__subtitle">{{ section.title }}</h2>
+                            <h2 class="newtab__subtitle" v-text="section.title"></h2>
 
                             <div class="newtab__buttons">
                                 <button
@@ -160,9 +169,9 @@
                                 <button
                                     class="newtab__button"
                                     @click="openItemModal(sectionKey)"
-                                    v-text="'Add Item'"
                                 >
                                     <i class="fas fa-plus"></i>
+                                    Add Item
                                 </button>
                             </div>
                         </div>
@@ -224,9 +233,9 @@
                         <div
                             v-for="(person, personKey) in birthdayMonthModal"
                             :key="personKey"
-                            class="newtab__modal_field">
-                            {{ person.name + ' - ' + person.date }}
-                        </div>
+                            class="newtab__modal_field"
+                            v-text="person.name + ' - ' + person.date"
+                        ></div>
                     </div>
                 </div>
             </modal>
@@ -249,11 +258,12 @@
                         <div
                             v-for="(person, personKey) in allBirthdayModal"
                             :key="personKey"
-                            class="newtab__modal_field newtab__modal_field--modalAll">
+                            class="newtab__modal_field newtab__modal_field--modal"
+                        >
                             {{ person.name + ' - ' + person.date }}
 
                             <button
-                                class="newtab__button newtab__button--modalAll"
+                                class="newtab__button newtab__button--modal"
                                 title="Delete Person"
                                 @click="removePerson(personKey)"
                             >
@@ -302,6 +312,40 @@
                             @click="submitBirthdayModal()"
                             v-text="birthdayModal.modalName"
                         ></button>
+                    </div>
+                </div>
+            </modal>
+
+            <modal
+                name="importBirthdaysModal"
+                :width="435"
+                :height="380"
+            >
+                <div class="newtab__modal">
+                    <div class="newtab__modal_header">
+                        <h1 class="newtab__modal_title" v-text="'Import'"></h1>
+
+                        <button class="newtab__modal_close" @click="closeImportBirthdayModal()">
+                            <span><i class="fas fa-times"></i></span>
+                        </button>
+                    </div>
+
+                    <div class="newtab__modal_field">
+                        <textarea
+                            class="newtab__modal_input"
+                            rows="9"
+                            placeholder="Paste birthday json"
+                            v-model="birthdayModal.import"
+                        ></textarea>
+                    </div>
+
+                    <div class="newtab__modal_footer">
+                        <button
+                            class="newtab__modal_button"
+                            @click="importBirthdays()"
+                            v-text="'Save'"
+                        >
+                        </button>
                     </div>
                 </div>
             </modal>
@@ -471,6 +515,7 @@
 <script>
 import SaveState from 'vue-save-state';
 import draggable from 'vuedraggable';
+import moment from 'moment';
 
 export default {
     components: { draggable },
@@ -507,6 +552,7 @@ export default {
             name: '',
             date: '',
             modalName: '',
+            import: '',
         },
 
         birthdayMonthModal : [],
@@ -519,84 +565,12 @@ export default {
                 type: 'birthday',
                 items: [
                     {
-                        name: 'Barbara Carvalho',
-                        date: '22-03',
+                        name: 'John Doe',
+                        date: '01-01',
                     },
                     {
-                        name: 'Bruna Rubio',
-                        date: '18-03',
-                    },
-                    {
-                        name: 'Carlos Bastos',
-                        date: '27-12',
-                    },
-                    {
-                        name: 'Daniel Polito',
-                        date: '06-02',
-                    },
-                    {
-                        name: 'Douglas Gálico',
-                        date: '06-02',
-                    },
-                    {
-                        name: 'Eduardo Bojikian',
-                        date: '02-12',
-                    },
-                    {
-                        name: 'Eduardo Redressa',
-                        date: '06-04',
-                    },
-                    {
-                        name: 'Fabrício Souza',
-                        date: '10-01',
-                    },
-                    {
-                        name: 'Fellipe Rocha',
-                        date: '',
-                    },
-                    {
-                        name: 'Fernando Hideo',
-                        date: '03-04',
-                    },
-                    {
-                        name: 'Gabriel Oliveira',
-                        date: '17-11',
-                    },
-                    {
-                        name: 'Juliana Ferreira',
-                        date: '11-10',
-                    },
-                    {
-                        name: 'Karoline Kimiko',
-                        date: '21-04',
-                    },
-                    {
-                        name: 'Leandro Brito',
-                        date: '13-07',
-                    },
-                    {
-                        name: 'Matheus William',
-                        date: '16-04',
-                    },
-                    {
-                        name: 'Matheus Solha',
-                        date: '24-08',
-                    },
-                    {
-                        name: 'Ricardo Carneiro',
-                        date: '23-02',
-                    },
-                    {
-                        name: 'Tiago Silva',
-                        date: '22-05',
-                    },
-                    {
-                        name: 'Vinicius Lopes',
-                        date: '08-02',
-                    },
-                    {
-                        name: 'Wesley Francisco',
-                        date: '19-10',
+                        name: 'Jane Doe',
+                        date: '03-03',
                     },
                 ],
             },
@@ -684,19 +658,15 @@ export default {
 
     methods: {
         getMonth (birthdays) {
-            let date = new Date();
-
-            return birthdays.filter(birthday => {
-                return Number(birthday.date.split('-')[1]) === date.getMonth() + 1;
-            });
+            return birthdays.filter(birthday =>
+                Number(birthday.date.split('-')[1]) === moment().month() + 1,
+            );
         },
 
         getToday (birthdays) {
-            let date = new Date();
-
-            return birthdays.filter(birthday => {
-                return Number(birthday.date.split('-')[0]) === date.getDate() && Number(birthday.date.split('-')[1]) === date.getMonth() + 1;
-            });
+            return birthdays.filter(birthday =>
+                Number(birthday.date.split('-')[0]) === moment().date() && Number(birthday.date.split('-')[1]) === moment().month() + 1,
+            );
         },
 
         removePerson (personKey) {
@@ -734,6 +704,15 @@ export default {
             section.items.push(item);
 
             this.closeAddBirthdayModal();
+        },
+
+        openImportBirthdayModal (sectionKey) {
+            this.birthdayModal.sectionKey = sectionKey;
+            this.$modal.show('importBirthdaysModal');
+        },
+
+        closeImportBirthdayModal () {
+            this.$modal.hide('importBirthdaysModal');
         },
 
         closeAddBirthdayModal () {
@@ -891,6 +870,26 @@ export default {
             this.sections = sections;
 
             this.closeImport();
+        },
+
+        importBirthdays () {
+            let importText = JSON.parse(this.birthdayModal.import);
+
+            if (! importText.items) {
+                return;
+            }
+
+            let section = importText
+                .items
+                .filter(item => item.name && item.date)
+                .map(item => ({
+                    name: item.name,
+                    date: item.date,
+                }));
+
+            this.sections[this.birthdayModal.sectionKey].items = section;
+
+            this.closeImportBirthdayModal();
         },
 
         closeImport () {
