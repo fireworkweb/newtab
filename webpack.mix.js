@@ -7,7 +7,7 @@ require('laravel-mix-purgecss');
 
 mix
     .setPublicPath('dist')
-    .js('src/main.js', 'dist')
+    .js('src/js/main.js', 'dist')
     .options({
         processCssUrls: false,
         postCss: [ tailwindcss('./tailwind.js') ],

@@ -41,6 +41,14 @@
         @extend .text-primary-dark;
 
         &:hover { @extend .text-primary-light; }
+
+        &--modal {
+            @apply
+                .shadow-none
+                .absolute
+                .pin-r
+                .pin-b;
+        }
     }
 
     &__select {
@@ -132,6 +140,8 @@
 
             &:hover { @apply .text-white; }
 
+            &--birthday { @apply .cursor-pointer; }
+
         }
 
         &_image {
@@ -149,6 +159,18 @@
                 .h-32
                 .mb-1
                 .py-3;
+
+            @extend .bg-primary;
+        }
+
+        &_text {
+            @apply
+                .block
+                .h-auto
+                .mb-1
+                .py-3;
+
+            min-height: 8rem;
 
             @extend .bg-primary;
         }
@@ -173,6 +195,12 @@
             @extend .text-primary-lighter;
         }
 
+        &_body {
+            @apply .overflow-y-scroll;
+
+            height: 290px;
+        }
+
         &_field {
             @apply
                 .border-b
@@ -181,6 +209,8 @@
                 .mt-3;
 
             @extend .border-primary;
+
+            &--modal { @apply .relative; }
         }
 
         &_input {
