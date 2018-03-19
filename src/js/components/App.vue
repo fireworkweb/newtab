@@ -694,6 +694,7 @@ export default {
     },
 
     methods: {
+        // ----------------------------Item birthday ----------------------------------
         getMonth (birthdays) {
             return birthdays.filter(birthday =>
                 Number(birthday.date.split('-')[1]) === moment().month() + 1,
@@ -766,6 +767,28 @@ export default {
             this.$modal.hide('birthdayMonthModal');
         },
 
+        importBirthdays () {
+            let importText = JSON.parse(this.birthdayModal.import);
+
+            if (! importText.items) {
+                return;
+            }
+
+            let section = importText
+                .items
+                .filter(item => item.name && item.date)
+                .map(item => ({
+                    name: item.name,
+                    date: item.date,
+                }));
+
+            this.sections[this.birthdayModal.sectionKey].items = section;
+
+            this.closeImportBirthdayModal();
+        },
+        // ----------------------------Fim Item birthday ----------------------------------
+
+        // ----------------------------Item link ----------------------------------
         openItemModal (sectionKey, itemKey) {
             this.itemModal.modalName = itemKey !== undefined ? 'Edit Item' : 'Add Item';
 
@@ -823,7 +846,9 @@ export default {
 
             this.$modal.hide('itemModal');
         },
+        // ----------------------------Fim Item ----------------------------------
 
+        // ---------------------------- Section ----------------------------------
         openSectionModal (sectionKey) {
             this.sectionModal.modalName = sectionKey !== undefined ? 'Edit Section' : 'Add Section';
             this.sectionModal.sectionKey = sectionKey;
@@ -865,7 +890,9 @@ export default {
 
             this.$modal.hide('sectionModal');
         },
+        // ---------------------------- Fim Section ----------------------------------
 
+        // ----------------------------Import / Export ----------------------------------
         openImport () {
             this.$modal.show('importModal');
         },
@@ -914,26 +941,6 @@ export default {
             this.closeImport();
         },
 
-        importBirthdays () {
-            let importText = JSON.parse(this.birthdayModal.import);
-
-            if (! importText.items) {
-                return;
-            }
-
-            let section = importText
-                .items
-                .filter(item => item.name && item.date)
-                .map(item => ({
-                    name: item.name,
-                    date: item.date,
-                }));
-
-            this.sections[this.birthdayModal.sectionKey].items = section;
-
-            this.closeImportBirthdayModal();
-        },
-
         closeImport () {
             this.importModal.data = '';
             this.$modal.hide('importModal');
@@ -950,6 +957,7 @@ export default {
 
             this.closeExport();
         },
+        // ----------------------------Fim Import / Export ----------------------------------
 
         reset () {
             if (confirm('Reset all configurations?')) {

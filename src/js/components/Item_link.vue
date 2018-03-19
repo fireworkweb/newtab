@@ -55,26 +55,66 @@ export default {
             whitescale: false,
             url: '',
         },
-
-        sectionModal: {
-            sectionKey: null,
-            modalName: '',
-            title: '',
-        },
-
-        birthdayModal: {
-            sectionKey: null,
-            itemKey: null,
-            name: '',
-            date: '',
-            modalName: '',
-            import: '',
-        },
-
-        birthdayMonthModal : [],
-
-        allBirthdayModal : [],
-
     }),
+
+    methods: {
+        openItemModal (sectionKey, itemKey) {
+            this.itemModal.modalName = itemKey !== undefined ? 'Edit Item' : 'Add Item';
+
+            this.itemModal.sectionKey = sectionKey;
+            this.itemModal.itemKey = itemKey;
+
+            this.$modal.show('itemModal');
+
+            if (itemKey !== undefined) {
+                let item = this.sections[this.itemModal.sectionKey].items[itemKey];
+
+                this.itemModal.title = item.title;
+                this.itemModal.icon = item.icon;
+                this.itemModal.image = item.image;
+                this.itemModal.whitescale = item.whitescale;
+                this.itemModal.url = item.url;
+            }
+        },
+
+        submitItemModal () {
+            let itemKey = this.itemModal.itemKey,
+                sectionKey = this.itemModal.sectionKey,
+                section = this.sections[sectionKey],
+                item = {
+                    title: this.itemModal.title,
+                    icon: this.itemModal.icon,
+                    image: this.itemModal.image,
+                    whitescale: this.itemModal.whitescale,
+                    url: this.itemModal.url,
+                };
+
+            if (itemKey !== undefined) {
+                section.items[itemKey] = item;
+            } else {
+                section.items.push(item);
+            }
+
+            this.closeItemModal();
+        },
+
+        removeItem (sectionKey, itemKey) {
+            if (confirm('Delete item?')) {
+                this.sections[sectionKey].items.splice(itemKey, 1);
+            }
+        },
+
+        closeItemModal () {
+            this.itemModal.sectionKey = null;
+            this.itemModal.itemKey = null;
+            this.itemModal.title = '';
+            this.itemModal.icon = '';
+            this.itemModal.image = '';
+            this.itemModal.whitescale = false;
+            this.itemModal.url = '';
+
+            this.$modal.hide('itemModal');
+        },
+    }
 };
 </script>

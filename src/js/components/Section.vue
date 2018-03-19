@@ -93,108 +93,103 @@ export default {
             modalName: '',
             title: '',
         },
+    }),
 
-        birthdayModal: {
-            sectionKey: null,
-            itemKey: null,
-            name: '',
-            date: '',
-            modalName: '',
-            import: '',
+    methods: {
+        openSectionModal (sectionKey) {
+            this.sectionModal.modalName = sectionKey !== undefined ? 'Edit Section' : 'Add Section';
+            this.sectionModal.sectionKey = sectionKey;
+
+            if (sectionKey !== undefined) {
+                let section = this.sections[sectionKey];
+
+                this.sectionModal.title = section.title;
+            }
+
+            this.$modal.show('sectionModal');
         },
 
-        birthdayMonthModal : [],
+        submitSectionModal () {
+            let key = this.sectionModal.sectionKey;
 
-        allBirthdayModal : [],
+            if (key !== undefined) {
+                this.sections[key].title = this.sectionModal.title;
+            } else {
+                this.sections.push({
+                    title: this.sectionModal.title,
+                    items: [],
+                });
+            }
 
-        sections: [
-            {
-                title: 'Birthdays',
-                type: 'birthday',
-                items: [
-                    {
-                        name: 'John Doe',
-                        date: '01-01',
-                    },
-                    {
-                        name: 'Jane Doe',
-                        date: '03-03',
-                    },
-                ],
-            },
-            {
-                title: 'Work',
-                type: 'link',
-                items: [
-                    {
-                        url: 'https://calendar.google.com/calendar/r',
-                        icon: 'far fa-calendar-alt',
-                        title: 'Calendar',
-                    },
-                    {
-                        url: '#',
-                        image: 'http://via.placeholder.com/224x128',
-                        title: 'Test',
-                    },
-                    {
-                        url: '#',
-                        image: 'http://via.placeholder.com/224x128',
-                        title: 'Test',
-                    },
-                    {
-                        url: '#',
-                        image: 'http://via.placeholder.com/224x128',
-                        title: 'Test',
-                    },
-                    {
-                        url: '#',
-                        image: 'http://via.placeholder.com/224x128',
-                        title: 'Test',
-                    },
-                    {
-                        url: '#',
-                        image: 'http://via.placeholder.com/224x128',
-                        title: 'Test',
-                    },
-                    {
-                        url: '#',
-                        image: 'http://via.placeholder.com/224x128',
-                        title: 'Test',
-                    },
-                ],
-            },
-            {
-                title: 'Fun',
-                type: 'link',
-                items: [
-                    {
-                        url: 'https://calendar.google.com/calendar/r',
-                        icon: 'far fa-calendar-alt',
-                        title: 'Calendar',
-                    },
-                    {
-                        url: '#',
-                        image: 'http://via.placeholder.com/224x128',
-                        title: 'Test',
-                    },
-                    {
-                        url: '#',
-                        image: 'http://via.placeholder.com/224x128',
-                        title: 'Test',
-                    },
-                    {
-                        url: '#',
-                        image: 'http://via.placeholder.com/224x128',
-                        title: 'Test',
-                    },
-                    {
-                        url: '#',
-                        image: 'http://via.placeholder.com/224x128',
-                        title: 'Test',
-                    },
-                ],
-            },
-        ],
-    }),
+            this.closeSectionModal();
+        },
+
+        removeSection (sectionKey) {
+            if (confirm('Delete section?')) {
+                this.sections.splice(sectionKey, 1);
+            }
+        },
+
+        closeSectionModal () {
+            this.sectionModal.sectionKey = null;
+            this.sectionModal.title = '';
+
+            this.$modal.hide('sectionModal');
+        },
+
+        // ----------------------------Item link ----------------------------------
+         openItemModal (sectionKey, itemKey) {
+            this.itemModal.modalName = itemKey !== undefined ? 'Edit Item' : 'Add Item';
+
+            this.itemModal.sectionKey = sectionKey;
+            this.itemModal.itemKey = itemKey;
+
+            this.$modal.show('itemModal');
+
+            if (itemKey !== undefined) {
+                let item = this.sections[this.itemModal.sectionKey].items[itemKey];
+
+                this.itemModal.title = item.title;
+                this.itemModal.icon = item.icon;
+                this.itemModal.image = item.image;
+                this.itemModal.whitescale = item.whitescale;
+                this.itemModal.url = item.url;
+            }
+        },
+
+        submitItemModal () {
+            let itemKey = this.itemModal.itemKey,
+                sectionKey = this.itemModal.sectionKey,
+                section = this.sections[sectionKey],
+                item = {
+                    title: this.itemModal.title,
+                    icon: this.itemModal.icon,
+                    image: this.itemModal.image,
+                    whitescale: this.itemModal.whitescale,
+                    url: this.itemModal.url,
+                };
+
+            if (itemKey !== undefined) {
+                section.items[itemKey] = item;
+            } else {
+                section.items.push(item);
+            }
+
+            this.closeItemModal();
+        },
+
+        closeItemModal () {
+            this.itemModal.sectionKey = null;
+            this.itemModal.itemKey = null;
+            this.itemModal.title = '';
+            this.itemModal.icon = '';
+            this.itemModal.image = '';
+            this.itemModal.whitescale = false;
+            this.itemModal.url = '';
+
+            this.$modal.hide('itemModal');
+        },
+        // ----------------------------Fim Item link ----------------------------------
+    },
 };
 </script>

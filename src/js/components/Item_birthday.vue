@@ -89,23 +89,6 @@ export default {
     },
 
     data: () => ({
-        itemModal: {
-            sectionKey: null,
-            itemKey: null,
-            modalName: '',
-            title: '',
-            icon: '',
-            image: '',
-            whitescale: false,
-            url: '',
-        },
-
-        sectionModal: {
-            sectionKey: null,
-            modalName: '',
-            title: '',
-        },
-
         birthdayModal: {
             sectionKey: null,
             itemKey: null,
@@ -134,167 +117,85 @@ export default {
             );
         },
 
-        // removePerson (personKey) {
-        //     if (confirm('Delete person?')) {
-        //         this.sections[this.birthdayModal.sectionKey].items.splice(personKey, 1);
-        //     }
-        // },
+        removePerson (personKey) {
+            if (confirm('Delete person?')) {
+                this.sections[this.birthdayModal.sectionKey].items.splice(personKey, 1);
+            }
+        },
 
-        // //OK
-        // openSeeAllBirthdays (sectionKey) {
-        //     this.allBirthdayModal = this.sections[sectionKey].items;
-        //     this.birthdayModal.sectionKey = sectionKey;
+        openSeeAllBirthdays (sectionKey) {
+            this.allBirthdayModal = this.sections[sectionKey].items;
+            this.birthdayModal.sectionKey = sectionKey;
 
-        //     this.$modal.show('seeAllModal');
-        // },
+            this.$modal.show('seeAllModal');
+        },
 
-        // closeSeeAllBirthdays () {
-        //     this.$modal.hide('seeAllModal');
-        // },
+        closeSeeAllBirthdays () {
+            this.$modal.hide('seeAllModal');
+        },
 
-        // //OK
-        // openAddBirthdayModal (sectionKey) {
-        //     this.birthdayModal.sectionKey = sectionKey;
-        //     this.birthdayModal.modalName = 'Add new birthday';
+        openAddBirthdayModal (sectionKey) {
+            this.birthdayModal.sectionKey = sectionKey;
+            this.birthdayModal.modalName = 'Add new birthday';
 
-        //     this.$modal.show('birthdayModal');
-        // },
+            this.$modal.show('birthdayModal');
+        },
 
-        // submitBirthdayModal () {
-        //     let sectionKey = this.birthdayModal.sectionKey,
-        //         section = this.sections[sectionKey],
-        //         item = {
-        //             name: this.birthdayModal.name,
-        //             date: this.birthdayModal.date,
-        //         };
+        submitBirthdayModal () {
+            let sectionKey = this.birthdayModal.sectionKey,
+                section = this.sections[sectionKey],
+                item = {
+                    name: this.birthdayModal.name,
+                    date: this.birthdayModal.date,
+                };
 
-        //     section.items.push(item);
+            section.items.push(item);
 
-        //     this.closeAddBirthdayModal();
-        // },
+            this.closeAddBirthdayModal();
+        },
 
-        // openItemModal (sectionKey, itemKey) {
-        //     this.itemModal.modalName = itemKey !== undefined ? 'Edit Item' : 'Add Item';
+        openImportBirthdayModal (sectionKey) {
+            this.birthdayModal.sectionKey = sectionKey;
+            this.$modal.show('importBirthdaysModal');
+        },
 
-        //     this.itemModal.sectionKey = sectionKey;
-        //     this.itemModal.itemKey = itemKey;
+        closeImportBirthdayModal () {
+            this.$modal.hide('importBirthdaysModal');
+        },
 
-        //     this.$modal.show('itemModal');
+        closeAddBirthdayModal () {
+            this.$modal.hide('birthdayModal');
+        },
 
-        //     if (itemKey !== undefined) {
-        //         let item = this.sections[this.itemModal.sectionKey].items[itemKey];
+        openBirthdaysMonthModal (sectionKey) {
+            this.birthdayMonthModal = this.getMonth(this.sections[sectionKey].items);
 
-        //         this.itemModal.title = item.title;
-        //         this.itemModal.icon = item.icon;
-        //         this.itemModal.image = item.image;
-        //         this.itemModal.whitescale = item.whitescale;
-        //         this.itemModal.url = item.url;
-        //     }
-        // },
+            this.$modal.show('birthdayMonthModal');
+        },
 
-        // submitItemModal () {
-        //     let itemKey = this.itemModal.itemKey,
-        //         sectionKey = this.itemModal.sectionKey,
-        //         section = this.sections[sectionKey],
-        //         item = {
-        //             title: this.itemModal.title,
-        //             icon: this.itemModal.icon,
-        //             image: this.itemModal.image,
-        //             whitescale: this.itemModal.whitescale,
-        //             url: this.itemModal.url,
-        //         };
+        closeBirthdaysMonthModal () {
+            this.$modal.hide('birthdayMonthModal');
+        },
 
-        //     if (itemKey !== undefined) {
-        //         section.items[itemKey] = item;
-        //     } else {
-        //         section.items.push(item);
-        //     }
+        importBirthdays () {
+            let importText = JSON.parse(this.birthdayModal.import);
 
-        //     this.closeItemModal();
-        // },
+            if (! importText.items) {
+                return;
+            }
 
-        // removeItem (sectionKey, itemKey) {
-        //     if (confirm('Delete item?')) {
-        //         this.sections[sectionKey].items.splice(itemKey, 1);
-        //     }
-        // },
+            let section = importText
+                .items
+                .filter(item => item.name && item.date)
+                .map(item => ({
+                    name: item.name,
+                    date: item.date,
+                }));
 
-        // closeItemModal () {
-        //     this.itemModal.sectionKey = null;
-        //     this.itemModal.itemKey = null;
-        //     this.itemModal.title = '';
-        //     this.itemModal.icon = '';
-        //     this.itemModal.image = '';
-        //     this.itemModal.whitescale = false;
-        //     this.itemModal.url = '';
+            this.sections[this.birthdayModal.sectionKey].items = section;
 
-        //     this.$modal.hide('itemModal');
-        // },
-
-        // // OK
-        // openSectionModal (sectionKey) {
-        //     this.sectionModal.modalName = sectionKey !== undefined ? 'Edit Section' : 'Add Section';
-        //     this.sectionModal.sectionKey = sectionKey;
-
-        //     if (sectionKey !== undefined) {
-        //         let section = this.sections[sectionKey];
-
-        //         this.sectionModal.title = section.title;
-        //     }
-
-        //     this.$modal.show('sectionModal');
-        // },
-
-        // submitSectionModal () {
-        //     let key = this.sectionModal.sectionKey;
-
-        //     if (key !== undefined) {
-        //         this.sections[key].title = this.sectionModal.title;
-        //     } else {
-        //         this.sections.push({
-        //             title: this.sectionModal.title,
-        //             items: [],
-        //         });
-        //     }
-
-        //     this.closeSectionModal();
-        // },
-
-        // // OK
-        // removeSection (sectionKey) {
-        //     if (confirm('Delete section?')) {
-        //         this.sections.splice(sectionKey, 1);
-        //     }
-        // },
-
-        // closeSectionModal () {
-        //     this.sectionModal.sectionKey = null;
-        //     this.sectionModal.title = '';
-
-        //     this.$modal.hide('sectionModal');
-        // },
-
-
-
-        // importBirthdays () {
-        //     let importText = JSON.parse(this.birthdayModal.import);
-
-        //     if (! importText.items) {
-        //         return;
-        //     }
-
-        //     let section = importText
-        //         .items
-        //         .filter(item => item.name && item.date)
-        //         .map(item => ({
-        //             name: item.name,
-        //             date: item.date,
-        //         }));
-
-        //     this.sections[this.birthdayModal.sectionKey].items = section;
-
-        //     this.closeImportBirthdayModal();
-        // },
+            this.closeImportBirthdayModal();
+        },
     },
 };
 </script>
