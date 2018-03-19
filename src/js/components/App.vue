@@ -48,8 +48,10 @@
             </div>
 
             <draggable :list="sections" :options="draggableOptions">
-                <div
+                <newtab-section
                     v-for="(section, sectionKey) in sections"
+                    :section="section"
+                    :sectionKey="sectionKey"
                     :key="sectionKey"
                     class="newtab__section"
                 >
@@ -226,7 +228,7 @@
                             </draggable>
                         </div>
                     </div>
-                </div>
+                </newtab-section>
             </draggable>
 
             <modal

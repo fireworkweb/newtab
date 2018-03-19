@@ -127,8 +127,9 @@
 
             &:hover { @apply .opacity-100; }
 
-            &--edit { right: 1.25rem; }
-            &--delete { right: 2.75rem; }
+            &--first { right: 1.25rem; }
+            &--second { right: 2.75rem; }
+            &--third { right: 4.25rem; }
         }
 
         &_body {
