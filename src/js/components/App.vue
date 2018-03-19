@@ -198,12 +198,12 @@
                                     </button>
 
                                     <a class="newtab__item_body" :href="item.url">
-                                        <span v-if="item.image" class="newtab__item_image">
-                                            <img :src="item.image">
-                                        </span>
-
                                         <span v-if="item.icon" class="newtab__item_icon">
                                             <i class="fa-5x" :class="item.icon"></i>
+                                        </span>
+
+                                        <span v-else-if="item.image" class="newtab__item_image">
+                                            <img :src="item.image" :class="{ whitescale: item.whitescale }">
                                         </span>
 
                                         <span v-if="item.title" v-text="item.title"></span>
@@ -353,7 +353,7 @@
             <modal
                 name="itemModal"
                 :width="435"
-                :height="380"
+                :height="440"
             >
                 <div class="newtab__modal">
                     <div class="newtab__modal_header">
@@ -389,6 +389,15 @@
                             placeholder="Image"
                             v-model="itemModal.image"
                         >
+                    </div>
+
+                    <div class="newtab__modal_field newtab__modal_field--checkbox">
+                        <input
+                            class="newtab__modal_checkbox"
+                            type="checkbox"
+                            v-model="itemModal.whitescale"
+                        >
+                        Image in whitescale
                     </div>
 
                     <div class="newtab__modal_field">
@@ -530,6 +539,7 @@ export default {
             title: '',
             icon: '',
             image: '',
+            whitescale: false,
             url: '',
         },
 
@@ -744,6 +754,7 @@ export default {
                 this.itemModal.title = item.title;
                 this.itemModal.icon = item.icon;
                 this.itemModal.image = item.image;
+                this.itemModal.whitescale = item.whitescale;
                 this.itemModal.url = item.url;
             }
         },
@@ -756,6 +767,7 @@ export default {
                     title: this.itemModal.title,
                     icon: this.itemModal.icon,
                     image: this.itemModal.image,
+                    whitescale: this.itemModal.whitescale,
                     url: this.itemModal.url,
                 };
 
@@ -780,6 +792,7 @@ export default {
             this.itemModal.title = '';
             this.itemModal.icon = '';
             this.itemModal.image = '';
+            this.itemModal.whitescale = false;
             this.itemModal.url = '';
 
             this.$modal.hide('itemModal');
@@ -863,6 +876,7 @@ export default {
                             title: item.title,
                             icon: item.icon || '',
                             image: item.image || '',
+                            whitescale: item.whitescale || false,
                             url: item.url,
                         }));
                     return section;
