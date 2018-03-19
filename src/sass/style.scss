@@ -151,7 +151,11 @@
 
             @extend .bg-primary;
 
-            img { max-height: 8rem; }
+            img {
+                max-height: 8rem;
+
+                &.whitescale { filter: brightness(0) invert(1); }
+            }
         }
 
         &_icon {
@@ -204,6 +208,7 @@
 
         &_field {
             @apply
+                .text-grey-darker
                 .border-b
                 .border-b-2
                 .py-2
@@ -212,6 +217,12 @@
             @extend .border-primary;
 
             &--modal { @apply .relative; }
+
+            &--checkbox {
+                @apply .relative;
+
+                padding-left: 20px;
+            }
         }
 
         &_input {
@@ -223,6 +234,15 @@
                 .text-grey-darker
                 .py-1
                 .px-2;
+        }
+
+        &_checkbox {
+            @apply
+                .absolute
+                .pin-l;
+
+            bottom: 10px
+
         }
 
         &_footer {
