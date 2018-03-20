@@ -50,7 +50,7 @@
             <draggable :list="sections" :options="draggableOptions">
                 <newtab-section
                     v-for="(section, sectionKey) in sections"
-                    :section="section"
+                    :section.sync="section"
                     :sectionKey="sectionKey"
                     :key="sectionKey"
                     class="newtab__section"
@@ -232,210 +232,6 @@
             </draggable>
 
             <modal
-                name="birthdayMonthModal"
-                :width="435"
-                :height="400"
-            >
-                <div class="newtab__modal">
-                    <div class="newtab__modal_header">
-                        <h1 class="newtab__modal_title" v-text="'Birthdays of the Month'"></h1>
-
-                        <button class="newtab__modal_close" @click="closeBirthdaysMonthModal()">
-                            <i class="fas fa-times"></i>
-                        </button>
-                    </div>
-
-                    <div class="newtab__modal_body">
-                        <div
-                            v-for="(person, personKey) in birthdayMonthModal"
-                            :key="personKey"
-                            class="newtab__modal_field"
-                            v-text="person.name + ' - ' + person.date"
-                        ></div>
-                    </div>
-                </div>
-            </modal>
-
-            <modal
-                name="seeAllModal"
-                :width="435"
-                :height="400"
-            >
-                <div class="newtab__modal">
-                    <div class="newtab__modal_header">
-                        <h1 class="newtab__modal_title" v-text="'See all'"></h1>
-
-                        <button class="newtab__modal_close" @click="closeSeeAllBirthdays()">
-                            <i class="fas fa-times"></i>
-                        </button>
-                    </div>
-
-                    <div class="newtab__modal_body">
-                        <div
-                            v-for="(person, personKey) in allBirthdayModal"
-                            :key="personKey"
-                            class="newtab__modal_field newtab__modal_field--modal"
-                        >
-                            {{ person.name + ' - ' + person.date }}
-
-                            <button
-                                class="newtab__button newtab__button--modal"
-                                title="Delete Person"
-                                @click="removePerson(personKey)"
-                            >
-                                <i class="fas fa-trash-alt"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </modal>
-
-            <modal
-                name="birthdayModal"
-                :width="435"
-                :height="280"
-            >
-                <div class="newtab__modal">
-                    <div class="newtab__modal_header">
-                        <h1 class="newtab__modal_title" v-text="birthdayModal.modalName"></h1>
-
-                        <button class="newtab__modal_close" @click="closeAddBirthdayModal()">
-                            <i class="fas fa-times"></i>
-                        </button>
-                    </div>
-
-                    <div class="newtab__modal_field">
-                        <input
-                            class="newtab__modal_input"
-                            type="text"
-                            placeholder="Name"
-                            v-model="birthdayModal.name"
-                        >
-                    </div>
-
-                    <div class="newtab__modal_field">
-                        <input
-                            class="newtab__modal_input"
-                            type="text"
-                            placeholder="Date (01-01)"
-                            v-model="birthdayModal.date"
-                        >
-                    </div>
-
-                    <div class="newtab__modal_footer">
-                        <button
-                            class="newtab__modal_button"
-                            @click="submitBirthdayModal()"
-                            v-text="birthdayModal.modalName"
-                        ></button>
-                    </div>
-                </div>
-            </modal>
-
-            <modal
-                name="importBirthdaysModal"
-                :width="435"
-                :height="380"
-            >
-                <div class="newtab__modal">
-                    <div class="newtab__modal_header">
-                        <h1 class="newtab__modal_title" v-text="'Import'"></h1>
-
-                        <button class="newtab__modal_close" @click="closeImportBirthdayModal()">
-                            <span><i class="fas fa-times"></i></span>
-                        </button>
-                    </div>
-
-                    <div class="newtab__modal_field">
-                        <textarea
-                            class="newtab__modal_input"
-                            rows="9"
-                            placeholder="Paste birthday json"
-                            v-model="birthdayModal.import"
-                        ></textarea>
-                    </div>
-
-                    <div class="newtab__modal_footer">
-                        <button
-                            class="newtab__modal_button"
-                            @click="importBirthdays()"
-                            v-text="'Save'"
-                        >
-                        </button>
-                    </div>
-                </div>
-            </modal>
-
-            <modal
-                name="itemModal"
-                :width="435"
-                :height="440"
-            >
-                <div class="newtab__modal">
-                    <div class="newtab__modal_header">
-                        <h1 class="newtab__modal_title" v-text="itemModal.modalName"></h1>
-
-                        <button class="newtab__modal_close" @click="closeItemModal()">
-                            <i class="fas fa-times"></i>
-                        </button>
-                    </div>
-
-                    <div class="newtab__modal_field">
-                        <input
-                            class="newtab__modal_input"
-                            type="text"
-                            placeholder="Title"
-                            v-model="itemModal.title"
-                        >
-                    </div>
-
-                    <div class="newtab__modal_field">
-                        <input
-                            class="newtab__modal_input"
-                            type="text"
-                            placeholder="Icon"
-                            v-model="itemModal.icon"
-                        >
-                    </div>
-
-                    <div class="newtab__modal_field">
-                        <input
-                            class="newtab__modal_input"
-                            type="text"
-                            placeholder="Image"
-                            v-model="itemModal.image"
-                        >
-                    </div>
-
-                    <div class="newtab__modal_field newtab__modal_field--checkbox">
-                        <input
-                            class="newtab__modal_checkbox"
-                            type="checkbox"
-                            v-model="itemModal.whitescale"
-                        >
-                        Image in whitescale
-                    </div>
-
-                    <div class="newtab__modal_field">
-                        <input
-                            class="newtab__modal_input"
-                            type="text"
-                            placeholder="URL"
-                            v-model="itemModal.url"
-                        >
-                    </div>
-
-                    <div class="newtab__modal_footer">
-                        <button
-                            class="newtab__modal_button"
-                            @click="submitItemModal()"
-                            v-text="itemModal.modalName"
-                        ></button>
-                    </div>
-                </div>
-            </modal>
-
-            <modal
                 name="sectionModal"
                 :width="435"
                 :height="215"
@@ -548,17 +344,6 @@ export default {
     mixins: [ SaveState ],
 
     data: () => ({
-        itemModal: {
-            sectionKey: null,
-            itemKey: null,
-            modalName: '',
-            title: '',
-            icon: '',
-            image: '',
-            whitescale: false,
-            url: '',
-        },
-
         sectionModal: {
             sectionKey: null,
             modalName: '',
@@ -572,19 +357,6 @@ export default {
         exportModal: {
             data: '',
         },
-
-        birthdayModal: {
-            sectionKey: null,
-            itemKey: null,
-            name: '',
-            date: '',
-            modalName: '',
-            import: '',
-        },
-
-        birthdayMonthModal : [],
-
-        allBirthdayModal : [],
 
         sections: [
             {
@@ -694,186 +466,20 @@ export default {
     },
 
     methods: {
-        // ----------------------------Item birthday ----------------------------------
-        getMonth (birthdays) {
-            return birthdays.filter(birthday =>
-                Number(birthday.date.split('-')[1]) === moment().month() + 1,
-            );
-        },
-
-        getToday (birthdays) {
-            return birthdays.filter(birthday =>
-                Number(birthday.date.split('-')[0]) === moment().date() && Number(birthday.date.split('-')[1]) === moment().month() + 1,
-            );
-        },
-
-        removePerson (personKey) {
-            if (confirm('Delete person?')) {
-                this.sections[this.birthdayModal.sectionKey].items.splice(personKey, 1);
-            }
-        },
-
-        openSeeAllBirthdays (sectionKey) {
-            this.allBirthdayModal = this.sections[sectionKey].items;
-            this.birthdayModal.sectionKey = sectionKey;
-
-            this.$modal.show('seeAllModal');
-        },
-
-        closeSeeAllBirthdays () {
-            this.$modal.hide('seeAllModal');
-        },
-
-        openAddBirthdayModal (sectionKey) {
-            this.birthdayModal.sectionKey = sectionKey;
-            this.birthdayModal.modalName = 'Add new birthday';
-
-            this.$modal.show('birthdayModal');
-        },
-
-        submitBirthdayModal () {
-            let sectionKey = this.birthdayModal.sectionKey,
-                section = this.sections[sectionKey],
-                item = {
-                    name: this.birthdayModal.name,
-                    date: this.birthdayModal.date,
-                };
-
-            section.items.push(item);
-
-            this.closeAddBirthdayModal();
-        },
-
-        openImportBirthdayModal (sectionKey) {
-            this.birthdayModal.sectionKey = sectionKey;
-            this.$modal.show('importBirthdaysModal');
-        },
-
-        closeImportBirthdayModal () {
-            this.$modal.hide('importBirthdaysModal');
-        },
-
-        closeAddBirthdayModal () {
-            this.$modal.hide('birthdayModal');
-        },
-
-        openBirthdaysMonthModal (sectionKey) {
-            this.birthdayMonthModal = this.getMonth(this.sections[sectionKey].items);
-
-            this.$modal.show('birthdayMonthModal');
-        },
-
-        closeBirthdaysMonthModal () {
-            this.$modal.hide('birthdayMonthModal');
-        },
-
-        importBirthdays () {
-            let importText = JSON.parse(this.birthdayModal.import);
-
-            if (! importText.items) {
-                return;
-            }
-
-            let section = importText
-                .items
-                .filter(item => item.name && item.date)
-                .map(item => ({
-                    name: item.name,
-                    date: item.date,
-                }));
-
-            this.sections[this.birthdayModal.sectionKey].items = section;
-
-            this.closeImportBirthdayModal();
-        },
-        // ----------------------------Fim Item birthday ----------------------------------
-
-        // ----------------------------Item link ----------------------------------
-        openItemModal (sectionKey, itemKey) {
-            this.itemModal.modalName = itemKey !== undefined ? 'Edit Item' : 'Add Item';
-
-            this.itemModal.sectionKey = sectionKey;
-            this.itemModal.itemKey = itemKey;
-
-            this.$modal.show('itemModal');
-
-            if (itemKey !== undefined) {
-                let item = this.sections[this.itemModal.sectionKey].items[itemKey];
-
-                this.itemModal.title = item.title;
-                this.itemModal.icon = item.icon;
-                this.itemModal.image = item.image;
-                this.itemModal.whitescale = item.whitescale;
-                this.itemModal.url = item.url;
-            }
-        },
-
-        submitItemModal () {
-            let itemKey = this.itemModal.itemKey,
-                sectionKey = this.itemModal.sectionKey,
-                section = this.sections[sectionKey],
-                item = {
-                    title: this.itemModal.title,
-                    icon: this.itemModal.icon,
-                    image: this.itemModal.image,
-                    whitescale: this.itemModal.whitescale,
-                    url: this.itemModal.url,
-                };
-
-            if (itemKey !== undefined) {
-                section.items[itemKey] = item;
-            } else {
-                section.items.push(item);
-            }
-
-            this.closeItemModal();
-        },
-
-        removeItem (sectionKey, itemKey) {
-            if (confirm('Delete item?')) {
-                this.sections[sectionKey].items.splice(itemKey, 1);
-            }
-        },
-
-        closeItemModal () {
-            this.itemModal.sectionKey = null;
-            this.itemModal.itemKey = null;
-            this.itemModal.title = '';
-            this.itemModal.icon = '';
-            this.itemModal.image = '';
-            this.itemModal.whitescale = false;
-            this.itemModal.url = '';
-
-            this.$modal.hide('itemModal');
-        },
-        // ----------------------------Fim Item ----------------------------------
-
         // ---------------------------- Section ----------------------------------
         openSectionModal (sectionKey) {
-            this.sectionModal.modalName = sectionKey !== undefined ? 'Edit Section' : 'Add Section';
+            this.sectionModal.modalName = 'Add Section';
             this.sectionModal.sectionKey = sectionKey;
-
-            if (sectionKey !== undefined) {
-                let section = this.sections[sectionKey];
-
-                this.sectionModal.title = section.title;
-            }
 
             this.$modal.show('sectionModal');
         },
 
         submitSectionModal () {
-            let key = this.sectionModal.sectionKey;
-
-            if (key !== undefined) {
-                this.sections[key].title = this.sectionModal.title;
-            } else {
-                this.sections.push({
-                    title: this.sectionModal.title,
-                    type: 'link',
-                    items: [],
-                });
-            }
+            this.sections.push({
+                title: this.sectionModal.title,
+                type: 'link',
+                items: [],
+            });
 
             this.closeSectionModal();
         },

@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="newtab__section">
         <div class="newtab__section_header">
             <h2 class="newtab__subtitle" v-text="section.title"></h2>
 
@@ -15,7 +15,7 @@
                 <button
                     class="newtab__button"
                     title="Edit Section"
-                    @click="openSectionModal(sectionKey)"
+                    @click="openSectionModal()"
                 >
                     <i class="fas fa-edit"></i>
                 </button>
@@ -36,7 +36,7 @@
         >
             <draggable :list="section.items">
                  <newtab-item-birthday
-                    :items="section.items"
+                    :items.sync="section.items"
                     :sectionKey="sectionKey"
                 ></newtab-item-birthday>
             </draggable>
@@ -48,15 +48,116 @@
         >
             <draggable :list="section.items">
                 <newtab-item-link
-                    class="newtab__item"
                     v-for="(item, itemKey) in section.items"
-                    :item="item"
-                    :itemKey="itemKey"
-                    :sectionKey="sectionKey"
+                    :item.sync="item"
                     :key="itemKey"
+                    :sectionKey="sectionKey"
+                    :itemKey="itemKey"
                 ></newtab-item-link>
             </draggable>
         </div>
+
+        <modal
+            :name="sectionNameModal"
+            :width="435"
+            :height="215"
+        >
+            <div class="newtab__modal">
+                <div class="newtab__modal_header">
+                    <h1 class="newtab__modal_title" v-text="sectionModal.modalName"></h1>
+
+                    <button class="newtab__modal_close" @click="closeSectionModal()">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+
+                <div class="newtab__modal_field">
+                    <input
+                        class="newtab__modal_input"
+                        type="text"
+                        placeholder="Title"
+                        v-model="sectionModal.title"
+                    >
+                </div>
+
+                <div class="newtab__modal_footer">
+                    <button
+                        class="newtab__modal_button"
+                        @click="submitSectionModal()"
+                        v-text="sectionModal.modalName"
+                    ></button>
+                </div>
+            </div>
+        </modal>
+
+        <modal
+            :name="itemNameModal"
+            :width="435"
+            :height="440"
+        >
+            <div class="newtab__modal">
+                <div class="newtab__modal_header">
+                    <h1 class="newtab__modal_title" v-text="itemModal.modalName"></h1>
+
+                    <button class="newtab__modal_close" @click="closeItemModal()">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+
+                <div class="newtab__modal_field">
+                    <input
+                        class="newtab__modal_input"
+                        type="text"
+                        placeholder="Title"
+                        v-model="itemModal.title"
+                    >
+                </div>
+
+                <div class="newtab__modal_field">
+                    <input
+                        class="newtab__modal_input"
+                        type="text"
+                        placeholder="Icon"
+                        v-model="itemModal.icon"
+                    >
+                </div>
+
+                <div class="newtab__modal_field">
+                    <input
+                        class="newtab__modal_input"
+                        type="text"
+                        placeholder="Image"
+                        v-model="itemModal.image"
+                    >
+                </div>
+
+                <div class="newtab__modal_field newtab__modal_field--checkbox">
+                    <input
+                        class="newtab__modal_checkbox"
+                        type="checkbox"
+                        v-model="itemModal.whitescale"
+                    >
+                    Image in whitescale
+                </div>
+
+                <div class="newtab__modal_field">
+                    <input
+                        class="newtab__modal_input"
+                        type="text"
+                        placeholder="URL"
+                        v-model="itemModal.url"
+                    >
+                </div>
+
+                <div class="newtab__modal_footer">
+                    <button
+                        class="newtab__modal_button"
+                        @click="submitItemModal()"
+                        v-text="itemModal.modalName"
+                    ></button>
+                </div>
+            </div>
+        </modal>
     </div>
 </template>
 
@@ -78,8 +179,6 @@ export default {
 
     data: () => ({
         itemModal: {
-            sectionKey: null,
-            itemKey: null,
             modalName: '',
             title: '',
             icon: '',
@@ -89,37 +188,31 @@ export default {
         },
 
         sectionModal: {
-            sectionKey: null,
             modalName: '',
             title: '',
         },
     }),
 
+    computed: {
+        sectionNameModal () {
+            return 'sectionNameModal' + this.sectionKey;
+        },
+
+        itemNameModal () {
+            return 'itemNameModal' + this.sectionKey;
+        },
+    },
+
     methods: {
-        openSectionModal (sectionKey) {
-            this.sectionModal.modalName = sectionKey !== undefined ? 'Edit Section' : 'Add Section';
-            this.sectionModal.sectionKey = sectionKey;
+        openSectionModal () {
+            this.sectionModal.modalName = 'Edit Section';
+            this.sectionModal.title = this.section.title;
 
-            if (sectionKey !== undefined) {
-                let section = this.sections[sectionKey];
-
-                this.sectionModal.title = section.title;
-            }
-
-            this.$modal.show('sectionModal');
+            this.$modal.show(this.sectionNameModal);
         },
 
         submitSectionModal () {
-            let key = this.sectionModal.sectionKey;
-
-            if (key !== undefined) {
-                this.sections[key].title = this.sectionModal.title;
-            } else {
-                this.sections.push({
-                    title: this.sectionModal.title,
-                    items: [],
-                });
-            }
+            this.section.title = this.sectionModal.title;
 
             this.closeSectionModal();
         },
@@ -131,63 +224,40 @@ export default {
         },
 
         closeSectionModal () {
-            this.sectionModal.sectionKey = null;
             this.sectionModal.title = '';
 
-            this.$modal.hide('sectionModal');
+            this.$modal.hide(this.sectionNameModal);
         },
 
         // ----------------------------Item link ----------------------------------
-         openItemModal (sectionKey, itemKey) {
-            this.itemModal.modalName = itemKey !== undefined ? 'Edit Item' : 'Add Item';
+         openItemModal (sectionKey) {
+            this.itemModal.modalName = 'Add Item';
 
-            this.itemModal.sectionKey = sectionKey;
-            this.itemModal.itemKey = itemKey;
-
-            this.$modal.show('itemModal');
-
-            if (itemKey !== undefined) {
-                let item = this.sections[this.itemModal.sectionKey].items[itemKey];
-
-                this.itemModal.title = item.title;
-                this.itemModal.icon = item.icon;
-                this.itemModal.image = item.image;
-                this.itemModal.whitescale = item.whitescale;
-                this.itemModal.url = item.url;
-            }
+            this.$modal.show(this.itemNameModal);
         },
 
         submitItemModal () {
-            let itemKey = this.itemModal.itemKey,
-                sectionKey = this.itemModal.sectionKey,
-                section = this.sections[sectionKey],
-                item = {
-                    title: this.itemModal.title,
-                    icon: this.itemModal.icon,
-                    image: this.itemModal.image,
-                    whitescale: this.itemModal.whitescale,
-                    url: this.itemModal.url,
-                };
+            let item = {
+                title: this.itemModal.title,
+                icon: this.itemModal.icon,
+                image: this.itemModal.image,
+                whitescale: this.itemModal.whitescale,
+                url: this.itemModal.url,
+            };
 
-            if (itemKey !== undefined) {
-                section.items[itemKey] = item;
-            } else {
-                section.items.push(item);
-            }
+            this.section.items.push(item);
 
             this.closeItemModal();
         },
 
         closeItemModal () {
-            this.itemModal.sectionKey = null;
-            this.itemModal.itemKey = null;
             this.itemModal.title = '';
             this.itemModal.icon = '';
             this.itemModal.image = '';
             this.itemModal.whitescale = false;
             this.itemModal.url = '';
 
-            this.$modal.hide('itemModal');
+            this.$modal.hide(this.itemNameModal);
         },
         // ----------------------------Fim Item link ----------------------------------
     },

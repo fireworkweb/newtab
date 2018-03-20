@@ -9,7 +9,6 @@ Vue.component('newtab-section', Section);
 Vue.component('newtab-item-link', Item_link);
 Vue.component('newtab-item-birthday', Item_birthday);
 
-
 Vue.use(VModal);
 
 new Vue({

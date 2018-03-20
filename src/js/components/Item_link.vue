@@ -1,30 +1,101 @@
 <template>
-    <div>
-        <button
-            class="newtab__item_button newtab__item_button--second"
-            @click="removeItem(sectionKey, itemKey)"
+    <div style="display: inline-block">
+        <div class="newtab__item">
+            <button
+                class="newtab__item_button newtab__item_button--second"
+                @click="removeItem(sectionKey, itemKey)"
+            >
+                <i class="fas fa-trash-alt"></i>
+            </button>
+
+            <button
+                class="newtab__item_button newtab__item_button--first"
+                @click="openItemModal()"
+            >
+                <i class="fas fa-edit"></i>
+            </button>
+
+            <a class="newtab__item_body" :href="item.url">
+                <span v-if="item.icon" class="newtab__item_icon">
+                    <i class="fa-5x" :class="item.icon"></i>
+                </span>
+
+                <span v-else-if="item.image" class="newtab__item_image">
+                    <img :src="item.image" :class="{ whitescale: item.whitescale }">
+                </span>
+
+                <span v-if="item.title" v-text="item.title"></span>
+            </a>
+        </div>
+
+        <modal
+            :name="modalName"
+            :width="435"
+            :height="440"
         >
-            <i class="fas fa-trash-alt"></i>
-        </button>
+            <div class="newtab__modal">
+                <div class="newtab__modal_header">
+                    <h1 class="newtab__modal_title" v-text="itemModal.modalName"></h1>
 
-        <button
-            class="newtab__item_button newtab__item_button--first"
-            @click="openItemModal(sectionKey, itemKey)"
-        >
-            <i class="fas fa-edit"></i>
-        </button>
+                    <button class="newtab__modal_close" @click="closeItemModal()">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
 
-        <a class="newtab__item_body" :href="item.url">
-            <span v-if="item.icon" class="newtab__item_icon">
-                <i class="fa-5x" :class="item.icon"></i>
-            </span>
+                <div class="newtab__modal_field">
+                    <input
+                        class="newtab__modal_input"
+                        type="text"
+                        placeholder="Title"
+                        v-model="itemModal.title"
+                    >
+                </div>
 
-            <span v-else-if="item.image" class="newtab__item_image">
-                <img :src="item.image" :class="{ whitescale: item.whitescale }">
-            </span>
+                <div class="newtab__modal_field">
+                    <input
+                        class="newtab__modal_input"
+                        type="text"
+                        placeholder="Icon"
+                        v-model="itemModal.icon"
+                    >
+                </div>
 
-            <span v-if="item.title" v-text="item.title"></span>
-        </a>
+                <div class="newtab__modal_field">
+                    <input
+                        class="newtab__modal_input"
+                        type="text"
+                        placeholder="Image"
+                        v-model="itemModal.image"
+                    >
+                </div>
+
+                <div class="newtab__modal_field newtab__modal_field--checkbox">
+                    <input
+                        class="newtab__modal_checkbox"
+                        type="checkbox"
+                        v-model="itemModal.whitescale"
+                    >
+                    Image in whitescale
+                </div>
+
+                <div class="newtab__modal_field">
+                    <input
+                        class="newtab__modal_input"
+                        type="text"
+                        placeholder="URL"
+                        v-model="itemModal.url"
+                    >
+                </div>
+
+                <div class="newtab__modal_footer">
+                    <button
+                        class="newtab__modal_button"
+                        @click="submitItemModal()"
+                        v-text="itemModal.modalName"
+                    ></button>
+                </div>
+            </div>
+        </modal>
     </div>
 </template>
 
@@ -36,18 +107,18 @@ export default {
         item: {
             type: Object,
         },
-        itemKey: {
+
+        sectionKey: {
             type: Number,
         },
-        sectionKey: {
+
+        itemKey: {
             type: Number,
         },
     },
 
     data: () => ({
         itemModal: {
-            sectionKey: null,
-            itemKey: null,
             modalName: '',
             title: '',
             icon: '',
@@ -57,43 +128,31 @@ export default {
         },
     }),
 
+    computed: {
+        modalName () {
+            return 'itemModal' + this.sectionKey + this.itemKey;
+        },
+    },
+
     methods: {
-        openItemModal (sectionKey, itemKey) {
-            this.itemModal.modalName = itemKey !== undefined ? 'Edit Item' : 'Add Item';
+        openItemModal () {
+            this.itemModal.modalName = 'Edit Item';
 
-            this.itemModal.sectionKey = sectionKey;
-            this.itemModal.itemKey = itemKey;
+            this.itemModal.title = this.item.title;
+            this.itemModal.icon = this.item.icon;
+            this.itemModal.image = this.item.image;
+            this.itemModal.whitescale = this.item.whitescale;
+            this.itemModal.url = this.item.url;
 
-            this.$modal.show('itemModal');
-
-            if (itemKey !== undefined) {
-                let item = this.sections[this.itemModal.sectionKey].items[itemKey];
-
-                this.itemModal.title = item.title;
-                this.itemModal.icon = item.icon;
-                this.itemModal.image = item.image;
-                this.itemModal.whitescale = item.whitescale;
-                this.itemModal.url = item.url;
-            }
+            this.$modal.show(this.modalName);
         },
 
         submitItemModal () {
-            let itemKey = this.itemModal.itemKey,
-                sectionKey = this.itemModal.sectionKey,
-                section = this.sections[sectionKey],
-                item = {
-                    title: this.itemModal.title,
-                    icon: this.itemModal.icon,
-                    image: this.itemModal.image,
-                    whitescale: this.itemModal.whitescale,
-                    url: this.itemModal.url,
-                };
-
-            if (itemKey !== undefined) {
-                section.items[itemKey] = item;
-            } else {
-                section.items.push(item);
-            }
+            this.item.title = this.itemModal.title;
+            this.item.icon = this.itemModal.icon;
+            this.item.image = this.itemModal.image;
+            this.item.whitescale = this.itemModal.whitescale;
+            this.item.url = this.itemModal.url;
 
             this.closeItemModal();
         },
@@ -113,7 +172,7 @@ export default {
             this.itemModal.whitescale = false;
             this.itemModal.url = '';
 
-            this.$modal.hide('itemModal');
+            this.$modal.hide(this.modalName);
         },
     }
 };

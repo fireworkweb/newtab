@@ -4,7 +4,7 @@
             <button
                 class="newtab__item_button newtab__item_button--third"
                 title="See all"
-                @click="openSeeAllBirthdays(sectionKey)"
+                @click="openSeeAllBirthdays()"
             >
                 <i class="fas fa-eye"></i>
             </button>
@@ -12,7 +12,7 @@
             <button
                 class="newtab__item_button newtab__item_button--second"
                 title="Import birthdays"
-                @click="openImportBirthdayModal(sectionKey)"
+                @click="openImportBirthdayModal()"
             >
                 <i class="fas fa-download"></i>
             </button>
@@ -20,14 +20,14 @@
             <button
                 class="newtab__item_button newtab__item_button--first"
                 title="Add new birthday"
-                @click="openAddBirthdayModal(sectionKey)"
+                @click="openAddBirthdayModal()"
             >
                 <i class="fas fa-plus"></i>
             </button>
 
             <a
                 class="newtab__item_body newtab__item_body--birthday"
-                @click="openBirthdaysMonthModal(sectionKey)"
+                @click="openBirthdaysMonthModal()"
             >
                 <span
                     v-if="getMonth(items).length > 0"
@@ -72,6 +72,141 @@
                 <span v-text="'Today'"></span>
             </div>
         </div>
+
+        <modal
+            name="birthdayMonthModal"
+            :width="435"
+            :height="400"
+        >
+            <div class="newtab__modal">
+                <div class="newtab__modal_header">
+                    <h1 class="newtab__modal_title" v-text="'Birthdays of the Month'"></h1>
+
+                    <button class="newtab__modal_close" @click="closeBirthdaysMonthModal()">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+
+                <div class="newtab__modal_body">
+                    <div
+                        v-for="(person, personKey) in birthdayMonthModal"
+                        :key="personKey"
+                        class="newtab__modal_field"
+                        v-text="person.name + ' - ' + person.date"
+                    ></div>
+                </div>
+            </div>
+        </modal>
+
+        <modal
+            name="seeAllModal"
+            :width="435"
+            :height="400"
+        >
+            <div class="newtab__modal">
+                <div class="newtab__modal_header">
+                    <h1 class="newtab__modal_title" v-text="'See all'"></h1>
+
+                    <button class="newtab__modal_close" @click="closeSeeAllBirthdays()">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+
+                <div class="newtab__modal_body">
+                    <div
+                        v-for="(person, personKey) in items"
+                        :key="personKey"
+                        class="newtab__modal_field newtab__modal_field--modal"
+                    >
+                        {{ person.name + ' - ' + person.date }}
+
+                        <button
+                            class="newtab__button newtab__button--modal"
+                            title="Delete Person"
+                            @click="removePerson(personKey)"
+                        >
+                            <i class="fas fa-trash-alt"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </modal>
+
+        <modal
+            name="birthdayModal"
+            :width="435"
+            :height="280"
+        >
+            <div class="newtab__modal">
+                <div class="newtab__modal_header">
+                    <h1 class="newtab__modal_title" v-text="birthdayModal.modalName"></h1>
+
+                    <button class="newtab__modal_close" @click="closeAddBirthdayModal()">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+
+                <div class="newtab__modal_field">
+                    <input
+                        class="newtab__modal_input"
+                        type="text"
+                        placeholder="Name"
+                        v-model="birthdayModal.name"
+                    >
+                </div>
+
+                <div class="newtab__modal_field">
+                    <input
+                        class="newtab__modal_input"
+                        type="text"
+                        placeholder="Date (01-01)"
+                        v-model="birthdayModal.date"
+                    >
+                </div>
+
+                <div class="newtab__modal_footer">
+                    <button
+                        class="newtab__modal_button"
+                        @click="submitBirthdayModal()"
+                        v-text="birthdayModal.modalName"
+                    ></button>
+                </div>
+            </div>
+        </modal>
+
+        <modal
+            name="importBirthdaysModal"
+            :width="435"
+            :height="380"
+        >
+            <div class="newtab__modal">
+                <div class="newtab__modal_header">
+                    <h1 class="newtab__modal_title" v-text="'Import'"></h1>
+
+                    <button class="newtab__modal_close" @click="closeImportBirthdayModal()">
+                        <span><i class="fas fa-times"></i></span>
+                    </button>
+                </div>
+
+                <div class="newtab__modal_field">
+                    <textarea
+                        class="newtab__modal_input"
+                        rows="9"
+                        placeholder="Paste birthday json"
+                        v-model="birthdayModal.import"
+                    ></textarea>
+                </div>
+
+                <div class="newtab__modal_footer">
+                    <button
+                        class="newtab__modal_button"
+                        @click="importBirthdays()"
+                        v-text="'Save'"
+                    >
+                    </button>
+                </div>
+            </div>
+        </modal>
     </div>
 </template>
 
@@ -90,7 +225,6 @@ export default {
 
     data: () => ({
         birthdayModal: {
-            sectionKey: null,
             itemKey: null,
             name: '',
             date: '',
@@ -101,7 +235,6 @@ export default {
         birthdayMonthModal : [],
 
         allBirthdayModal : [],
-
     }),
 
     methods: {
@@ -123,10 +256,7 @@ export default {
             }
         },
 
-        openSeeAllBirthdays (sectionKey) {
-            this.allBirthdayModal = this.sections[sectionKey].items;
-            this.birthdayModal.sectionKey = sectionKey;
-
+        openSeeAllBirthdays () {
             this.$modal.show('seeAllModal');
         },
 
@@ -134,28 +264,24 @@ export default {
             this.$modal.hide('seeAllModal');
         },
 
-        openAddBirthdayModal (sectionKey) {
-            this.birthdayModal.sectionKey = sectionKey;
+        openAddBirthdayModal () {
             this.birthdayModal.modalName = 'Add new birthday';
 
             this.$modal.show('birthdayModal');
         },
 
         submitBirthdayModal () {
-            let sectionKey = this.birthdayModal.sectionKey,
-                section = this.sections[sectionKey],
-                item = {
-                    name: this.birthdayModal.name,
-                    date: this.birthdayModal.date,
-                };
+            let item = {
+                name: this.birthdayModal.name,
+                date: this.birthdayModal.date,
+            };
 
-            section.items.push(item);
+            this.items.push(item);
 
             this.closeAddBirthdayModal();
         },
 
-        openImportBirthdayModal (sectionKey) {
-            this.birthdayModal.sectionKey = sectionKey;
+        openImportBirthdayModal () {
             this.$modal.show('importBirthdaysModal');
         },
 
@@ -167,8 +293,8 @@ export default {
             this.$modal.hide('birthdayModal');
         },
 
-        openBirthdaysMonthModal (sectionKey) {
-            this.birthdayMonthModal = this.getMonth(this.sections[sectionKey].items);
+        openBirthdaysMonthModal () {
+            this.birthdayMonthModal = this.getMonth(this.items);
 
             this.$modal.show('birthdayMonthModal');
         },
@@ -184,15 +310,14 @@ export default {
                 return;
             }
 
+            this.items.splice(0);
+
             let section = importText
                 .items
                 .filter(item => item.name && item.date)
-                .map(item => ({
-                    name: item.name,
-                    date: item.date,
-                }));
-
-            this.sections[this.birthdayModal.sectionKey].items = section;
+                .map((item, itemKey) =>
+                    this.$set(this.items, itemKey, item)
+                );
 
             this.closeImportBirthdayModal();
         },
