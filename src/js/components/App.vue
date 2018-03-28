@@ -819,6 +819,7 @@ export default {
             } else {
                 this.sections.push({
                     title: this.sectionModal.title,
+                    type: 'link',
                     items: [],
                 });
             }
