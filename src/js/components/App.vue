@@ -42,7 +42,7 @@
                     <button class="newtab__button" @click="toggleLock()">
                         <i
                             :class="`fas fa-lock${lock ? '' : '-open'}`"
-                        ></i> {{ `${lock ? 'Lock' : 'Unlock'}` }}
+                        ></i> {{ lock ? 'Unlock' : 'Lock' }}
                     </button>
                 </div>
             </div>
