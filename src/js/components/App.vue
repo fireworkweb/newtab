@@ -5,37 +5,49 @@
                 <h1 class="newtab__title">New Tab</h1>
 
                 <div class="newtab__buttons">
-                    <div class="newtab__select">
-                        <select v-model="theme">
-                            <option
-                                v-for="(theme, key) in themes"
-                                v-text="theme"
-                                :key="key"
-                                :value="theme"
-                            ></option>
-                        </select>
-                        <i class="fas fa-sort-down"></i>
-                    </div>
+                    <template v-if="! lock">
+                        <div class="newtab__select">
+                            <select v-model="theme">
+                                <option
+                                    v-for="(theme, key) in themes"
+                                    v-text="theme"
+                                    :key="key"
+                                    :value="theme"
+                                ></option>
+                            </select>
+                            <i class="fas fa-sort-down"></i>
+                        </div>
 
-                    <button class="newtab__button" @click="reset()">
-                        <i class="fas fa-trash"></i> Reset
-                    </button>
+                        <a class="newtab__button" href="https://github.com/fireworkweb/newtab">
+                            <i class="fab fa-github"></i> Github
+                        </a>
 
-                    <button class="newtab__button" @click="openImport()">
-                        <i class="fas fa-download"></i> Import
-                    </button>
+                        <button class="newtab__button" @click="reset()">
+                            <i class="fas fa-trash"></i> Reset
+                        </button>
 
-                    <button class="newtab__button" @click="openExport()">
-                        <i class="fas fa-upload"></i> Export
-                    </button>
+                        <button class="newtab__button" @click="openImport()">
+                            <i class="fas fa-download"></i> Import
+                        </button>
 
-                    <button class="newtab__button" @click="openSectionModal()">
-                        <i class="fas fa-plus"></i> Add Section
+                        <button class="newtab__button" @click="openExport()">
+                            <i class="fas fa-upload"></i> Export
+                        </button>
+
+                        <button class="newtab__button" @click="openSectionModal()">
+                            <i class="fas fa-plus"></i> Add Section
+                        </button>
+                    </template>
+
+                    <button class="newtab__button" @click="toggleLock()">
+                        <i
+                            :class="`fas fa-lock${lock ? '' : '-open'}`"
+                        ></i> {{ `${lock ? 'Lock' : 'Unlock'}` }}
                     </button>
                 </div>
             </div>
 
-            <draggable :list="sections">
+            <draggable :list="sections" :options="draggableOptions">
                 <div
                     v-for="(section, sectionKey) in sections"
                     :key="sectionKey"
@@ -45,7 +57,7 @@
                         <div class="newtab__section_header">
                             <h2 class="newtab__subtitle" v-text="section.title"></h2>
 
-                            <div class="newtab__buttons">
+                            <div class="newtab__buttons" v-if="! lock">
                                 <button
                                     class="newtab__button"
                                     title="Delete Section"
@@ -92,7 +104,7 @@
                         </div>
 
                         <div class="newtab__section_body">
-                            <draggable :list="section.items">
+                            <draggable :list="section.items" :options="draggableOptions">
                                 <div class="newtab__item">
                                     <a
                                         class="newtab__item_body newtab__item_body--birthday"
@@ -149,7 +161,7 @@
                         <div class="newtab__section_header">
                             <h2 class="newtab__subtitle" v-text="section.title"></h2>
 
-                            <div class="newtab__buttons">
+                            <div class="newtab__buttons" v-if="! lock">
                                 <button
                                     class="newtab__button"
                                     title="Delete Section"
@@ -177,25 +189,27 @@
                         </div>
 
                         <div class="newtab__section_body">
-                            <draggable :list="section.items">
+                            <draggable :list="section.items" :options="draggableOptions">
                                 <div
                                     class="newtab__item"
                                     v-for="(item, itemKey) in section.items"
                                     :key="itemKey"
                                 >
-                                    <button
-                                        class="newtab__item_button newtab__item_button--delete"
-                                        @click="removeItem(sectionKey, itemKey)"
-                                    >
-                                        <i class="fas fa-trash-alt"></i>
-                                    </button>
+                                    <template v-if="! lock">
+                                        <button
+                                            class="newtab__item_button newtab__item_button--delete"
+                                            @click="removeItem(sectionKey, itemKey)"
+                                        >
+                                            <i class="fas fa-trash-alt"></i>
+                                        </button>
 
-                                    <button
-                                        class="newtab__item_button newtab__item_button--edit"
-                                        @click="openItemModal(sectionKey, itemKey)"
-                                    >
-                                        <i class="fas fa-edit"></i>
-                                    </button>
+                                        <button
+                                            class="newtab__item_button newtab__item_button--edit"
+                                            @click="openItemModal(sectionKey, itemKey)"
+                                        >
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                    </template>
 
                                     <a class="newtab__item_body" :href="item.url">
                                         <span v-if="item.icon" class="newtab__item_icon">
@@ -665,7 +679,17 @@ export default {
         ],
 
         theme: 'purple',
+
+        lock: false,
     }),
+
+    computed: {
+        draggableOptions () {
+            return {
+                disabled: this.lock,
+            };
+        },
+    },
 
     methods: {
         getMonth (birthdays) {
@@ -935,8 +959,12 @@ export default {
         getSaveStateConfig () {
             return {
                 'cacheKey': 'App',
-                'saveProperties': ['theme', 'sections'],
+                'saveProperties': ['theme', 'sections', 'lock'],
             };
+        },
+
+        toggleLock () {
+            this.lock = ! this.lock;
         },
     },
 };
