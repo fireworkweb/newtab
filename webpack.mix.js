@@ -15,7 +15,10 @@ mix
     .sass('src/sass/app.scss', 'dist')
     .webpackConfig({
         plugins: [
-            new HtmlWebpackPlugin({ template: './src/index.html' }),
+            new HtmlWebpackPlugin({
+                template: './src/index.html',
+                hash: true,
+            }),
         ],
     })
     .purgeCss({
