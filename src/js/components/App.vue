@@ -51,7 +51,7 @@
                 <newtab-section
                     v-for="(section, sectionKey) in sections"
                     :section.sync="section"
-                    :sectionKey="sectionKey"
+                    :section-key="sectionKey"
                     :key="sectionKey"
                     class="newtab__section"
                 >

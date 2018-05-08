@@ -1,75 +1,79 @@
 <template>
     <div>
-        <div class="newtab__item">
-            <button
-                class="newtab__item_button newtab__item_button--third"
-                title="See all"
-                @click="openSeeAllBirthdays()"
-            >
-                <i class="fas fa-eye"></i>
-            </button>
-
-            <button
-                class="newtab__item_button newtab__item_button--second"
-                title="Import birthdays"
-                @click="openImportBirthdayModal()"
-            >
-                <i class="fas fa-download"></i>
-            </button>
-
-            <button
-                class="newtab__item_button newtab__item_button--first"
-                title="Add new birthday"
-                @click="openAddBirthdayModal()"
-            >
-                <i class="fas fa-plus"></i>
-            </button>
-
-            <a
-                class="newtab__item_body newtab__item_body--birthday"
-                @click="openBirthdaysMonthModal()"
-            >
-                <span
-                    v-if="getMonth(items).length > 0"
-                    class="newtab__item_text"
+        <div class="newtab__item newtab__item--birthday">
+            <div class="newtab__item_holder newtab__item_holder--birthday">
+                <button
+                    class="newtab__item_button newtab__item_button--third"
+                    title="See all"
+                    @click="openSeeAllBirthdays()"
                 >
-                    <p
-                        v-for="(item, itemKey) in getMonth(items)"
-                        :key="itemKey"
-                        v-text="item.name"
-                    ></p>
-                </span>
+                    <i class="fas fa-eye"></i>
+                </button>
 
-                <span v-else class="newtab__item_icon">
-                    <p>No</p>
-                    <i class="fa-2x fas fa-birthday-cake"></i>
-                    <p>this month</p>
-                </span>
-
-                <span v-text="'Month'"></span>
-            </a>
-        </div>
-
-        <div class="newtab__item">
-            <div class="newtab__item_body">
-                <span
-                    v-if="getToday(items).length > 0"
-                    class="newtab__item_text"
+                <button
+                    class="newtab__item_button newtab__item_button--second"
+                    title="Import birthdays"
+                    @click="openImportBirthdayModal()"
                 >
-                    <p
-                        v-for="(item, itemKey) in getToday(items)"
-                        :key="itemKey"
-                        v-text="item.name"
-                    ></p>
-                </span>
+                    <i class="fas fa-download"></i>
+                </button>
 
-                <span v-else class="newtab__item_icon">
-                    <p>No</p>
-                    <i class="fa-2x fas fa-birthday-cake"></i>
-                    <p>today</p>
-                </span>
+                <button
+                    class="newtab__item_button newtab__item_button--first"
+                    title="Add new birthday"
+                    @click="openAddBirthdayModal()"
+                >
+                    <i class="fas fa-plus"></i>
+                </button>
 
-                <span v-text="'Today'"></span>
+                <a
+                    class="newtab__item_body"
+                    @click="openBirthdaysMonthModal()"
+                >
+                    <span
+                        v-if="getMonth(items).length > 0"
+                        class="newtab__item_text"
+                    >
+                        <p
+                            v-for="(item, itemKey) in getMonth(items)"
+                            :key="itemKey"
+                            v-text="item.name"
+                        ></p>
+                    </span>
+
+                    <span v-else class="newtab__item_icon">
+                        <p>No</p>
+                        <i class="fa-2x fas fa-birthday-cake"></i>
+                        <p>this month</p>
+                    </span>
+
+                    <span v-text="'Month'"></span>
+                </a>
+            </div>
+
+
+            <div class="newtab__item_holder newtab__item_holder--birthday">
+                <div class="newtab__item_body">
+                    <span
+                        v-if="getToday(items).length > 0"
+                        class="newtab__item_text"
+                    >
+                        <p
+                            v-for="(item, itemKey) in getToday(items)"
+                            :key="itemKey"
+                            v-text="item.name"
+                        ></p>
+                    </span>
+
+                    <span v-else class="newtab__item_icon">
+                        <p>No</p>
+                        <i class="fa-2x fas fa-birthday-cake"></i>
+                        <p>today</p>
+                    </span>
+
+                    <span v-text="'Today'"></span>
+                </div>
+
             </div>
         </div>
 

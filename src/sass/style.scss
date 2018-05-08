@@ -110,11 +110,14 @@
         @apply
             .w-64
             .p-2
-            .relative
             .inline-block
             .opacity-50;
 
         &:hover { @apply .opacity-100; }
+
+        &--birthday {
+            width: 32rem;
+        }
 
         &_button {
             @apply
@@ -127,11 +130,21 @@
 
             &:hover { @apply .opacity-100; }
 
-            &--first { right: 1.25rem; }
-            &--second { right: 2.75rem; }
-            &--third { right: 4.25rem; }
+            &--first { right: 1rem; }
+            &--second { right: 2.5rem; }
+            &--third { right: 4rem; }
         }
 
+        &_holder {
+            @apply .relative;
+
+            &--birthday {
+                @apply
+                    .inline-block
+                    .cursor-pointer;
+                width: 49%;
+            }
+        }
         &_body {
             @apply
                 .block
@@ -144,8 +157,6 @@
             @extend .text-primary-lightest;
 
             &:hover { @apply .text-white; }
-
-            &--birthday { @apply .cursor-pointer; }
         }
 
         &_image {
@@ -275,3 +286,11 @@
         }
     }
 }
+
+.newtab__item__birthday {
+    width: 32rem;
+    .newtab__item_body {
+        @apply .inline-block;
+    }
+}
+

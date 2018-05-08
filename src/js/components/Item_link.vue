@@ -1,31 +1,33 @@
 <template>
     <div style="display: inline-block">
         <div class="newtab__item">
-            <button
-                class="newtab__item_button newtab__item_button--second"
-                @click="removeItem(sectionKey, itemKey)"
-            >
-                <i class="fas fa-trash-alt"></i>
-            </button>
+            <div class="newtab__item_holder">
+                <button
+                    class="newtab__item_button newtab__item_button--second"
+                    @click="removeItem(sectionKey, itemKey)"
+                >
+                    <i class="fas fa-trash-alt"></i>
+                </button>
 
-            <button
-                class="newtab__item_button newtab__item_button--first"
-                @click="openItemModal()"
-            >
-                <i class="fas fa-edit"></i>
-            </button>
+                <button
+                    class="newtab__item_button newtab__item_button--first"
+                    @click="openItemModal()"
+                >
+                    <i class="fas fa-edit"></i>
+                </button>
 
-            <a class="newtab__item_body" :href="item.url">
-                <span v-if="item.icon" class="newtab__item_icon">
-                    <i class="fa-5x" :class="item.icon"></i>
-                </span>
+                <a class="newtab__item_body" :href="item.url">
+                    <span v-if="item.icon" class="newtab__item_icon">
+                        <i class="fa-5x" :class="item.icon"></i>
+                    </span>
 
-                <span v-else-if="item.image" class="newtab__item_image">
-                    <img :src="item.image" :class="{ whitescale: item.whitescale }">
-                </span>
+                    <span v-else-if="item.image" class="newtab__item_image">
+                        <img :src="item.image" :class="{ whitescale: item.whitescale }">
+                    </span>
 
-                <span v-if="item.title" v-text="item.title"></span>
-            </a>
+                    <span v-if="item.title" v-text="item.title"></span>
+                </a>
+            </div>
         </div>
 
         <modal
