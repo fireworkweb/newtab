@@ -13,8 +13,8 @@
         @apply
             .flex
             .justify-between
-            .p-4
-            .pb-8;
+            .p-1
+            .pb-2;
     }
 
     &__title { @extend .text-primary-darker; }
@@ -27,15 +27,15 @@
     &__buttons {
         @apply
             .flex
-            .pt-2
+            .pt-2/4
             .text-right;
     }
 
     &__button {
         @apply
-            .py-2
-            .px-4
-            .ml-2
+            .py-2/4
+            .px-1
+            .ml-2/4
             .shadow-md;
 
         @extend .text-primary-dark;
@@ -55,16 +55,16 @@
         @apply
             .relative
             .shadow-md
-            .pr-4;
+            .pr-1;
 
         @extend .text-primary-dark;
 
         select {
             @apply
                 .appearance-none
-                .py-2
-                .pl-4
-                .pr-1
+                .py-2/4
+                .pl-1
+                .pr-1/4
                 .bg-transparent;
 
             @extend .text-primary-dark;
@@ -84,8 +84,8 @@
 
     &__section {
         @apply
-            .p-4
-            .pb-4;
+            .p-1
+            .pb-1;
 
         &_header {
             @apply
@@ -97,8 +97,8 @@
             @apply
                 .flex
                 .flex-wrap
-                .-mx-2
-                .py-2;
+                .-mx-2/4
+                .py-2/4;
         }
 
         .newtab__buttons {
@@ -108,21 +108,21 @@
 
     &__item {
         @apply
-            .w-64
-            .p-2
+            .w-16
+            .p-2/4
             .inline-block
             .opacity-50;
 
         &:hover { @apply .opacity-100; }
 
         &--birthday {
-            width: 32rem;
+            @apply .w-32;
         }
 
         &_button {
             @apply
                 .absolute
-                .p-1
+                .p-1/4
                 .opacity-25
                 .text-grey-darker;
 
@@ -148,7 +148,7 @@
         &_body {
             @apply
                 .block
-                .p-2
+                .p-2/4
                 .shadow-md
                 .text-center
                 .text-xl;
@@ -162,8 +162,8 @@
         &_image {
             @apply
                 .block
-                .h-32
-                .mb-1;
+                .h-8
+                .mb-1/4;
 
             @extend .bg-primary;
 
@@ -179,9 +179,8 @@
             img {
                 @apply
                     .inline-block
-                    .align-middle;
-
-                max-height: 8rem;
+                    .align-middle
+                    .max-h-8;
 
                 &.whitescale { filter: brightness(0) invert(1); }
             }
@@ -190,9 +189,9 @@
         &_icon {
             @apply
                 .block
-                .h-32
-                .mb-1
-                .py-3;
+                .h-8
+                .mb-1/4
+                .py-3/4;
 
             @extend .bg-primary;
         }
@@ -201,23 +200,22 @@
             @apply
                 .block
                 .h-auto
-                .mb-1
-                .py-3;
-
-            min-height: 8rem;
+                .mb-1/4
+                .py-3/4
+                .min-h-8;
 
             @extend .bg-primary;
         }
     }
 
     &__modal {
-        @apply .p-6;
+        @apply .p-1.5;
 
         &_header {
             @apply
                 .flex
                 .justify-between
-                .mb-6;
+                .mb-1.5;
         }
 
         &_title {
@@ -240,8 +238,8 @@
                 .text-grey-darker
                 .border-b
                 .border-b-2
-                .py-2
-                .mt-3;
+                .py-2/4
+                .mt-3/4;
 
             @extend .border-primary;
 
@@ -261,8 +259,8 @@
                 .border-none
                 .w-full
                 .text-grey-darker
-                .py-1
-                .px-2;
+                .py-1/4
+                .px-2/4;
         }
 
         &_checkbox {
@@ -277,15 +275,15 @@
         &_footer {
             @apply
                 .text-right
-                .mt-6;
+                .mt-1.5;
         }
 
         &_button {
             @apply
                 .text-white
                 .font-bold
-                .py-2
-                .px-4
+                .py-2/4
+                .px-1
                 .rounded
                 .border-b-4;
 
@@ -299,11 +297,3 @@
         }
     }
 }
-
-.newtab__item__birthday {
-    width: 32rem;
-    .newtab__item_body {
-        @apply .inline-block;
-    }
-}
-
