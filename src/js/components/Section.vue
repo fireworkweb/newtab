@@ -3,7 +3,7 @@
         <div class="newtab__section_header">
             <h2 class="newtab__subtitle" v-text="section.title"></h2>
 
-            <div class="newtab__buttons">
+            <div class="newtab__buttons" v-if="! lock">
                 <button
                     class="newtab__button"
                     title="Delete Section"
@@ -35,10 +35,11 @@
             class="newtab__section_body"
         >
             <draggable :list="section.items">
-                 <newtab-item-birthday
+                <item-birthday
                     :items.sync="section.items"
-                    :sectionKey="sectionKey"
-                ></newtab-item-birthday>
+                    :section-key="sectionKey"
+                    @remove-item="removeItem($event)"
+                ></item-birthday>
             </draggable>
         </div>
 
@@ -47,13 +48,14 @@
             class="newtab__section_body"
         >
             <draggable :list="section.items">
-                <newtab-item-link
+                <item-link
                     v-for="(item, itemKey) in section.items"
-                    :item.sync="item"
                     :key="itemKey"
-                    :sectionKey="sectionKey"
-                    :itemKey="itemKey"
-                ></newtab-item-link>
+                    :item.sync="item"
+                    :section-key="sectionKey"
+                    :item-key="itemKey"
+                    @remove-item="removeItem(itemKey)"
+                ></item-link>
             </draggable>
         </div>
 
@@ -162,7 +164,6 @@
 </template>
 
 <script>
-import moment from 'moment';
 import draggable from 'vuedraggable';
 
 export default {
@@ -171,9 +172,15 @@ export default {
     props: {
         section: {
             type: Object,
+            required: true,
         },
         sectionKey: {
             type: Number,
+            required: true,
+        },
+        lock: {
+            type: Boolean,
+            required: true,
         },
     },
 
@@ -217,9 +224,9 @@ export default {
             this.closeSectionModal();
         },
 
-        removeSection (sectionKey) {
+        removeSection () {
             if (confirm('Delete section?')) {
-                this.sections.splice(sectionKey, 1);
+                this.$emit('remove-section');
             }
         },
 
@@ -230,7 +237,7 @@ export default {
         },
 
         // ----------------------------Item link ----------------------------------
-         openItemModal (sectionKey) {
+        openItemModal () {
             this.itemModal.modalName = 'Add Item';
 
             this.$modal.show(this.itemNameModal);
@@ -258,6 +265,10 @@ export default {
             this.itemModal.url = '';
 
             this.$modal.hide(this.itemNameModal);
+        },
+
+        removeItem (itemKey) {
+            this.section.items.splice(itemKey, 1);
         },
         // ----------------------------Fim Item link ----------------------------------
     },

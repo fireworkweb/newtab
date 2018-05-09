@@ -126,7 +126,7 @@
                 .opacity-25
                 .text-grey-darker;
 
-            top: 1.25rem;
+            top: .75rem;
 
             &:hover { @apply .opacity-100; }
 
@@ -167,7 +167,20 @@
 
             @extend .bg-primary;
 
+            &:before {
+                @apply
+                    .inline-block
+                    .h-full
+                    .align-middle;
+
+                content: '';
+            }
+
             img {
+                @apply
+                    .inline-block
+                    .align-middle;
+
                 max-height: 8rem;
 
                 &.whitescale { filter: brightness(0) invert(1); }

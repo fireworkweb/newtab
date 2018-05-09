@@ -5,9 +5,9 @@ import Item_link from './components/Item_link.vue';
 import Item_birthday from './components/Item_birthday.vue';
 import VModal from 'vue-js-modal';
 
-Vue.component('newtab-section', Section);
-Vue.component('newtab-item-link', Item_link);
-Vue.component('newtab-item-birthday', Item_birthday);
+Vue.component('sections', Section);
+Vue.component('item-link', Item_link);
+Vue.component('item-birthday', Item_birthday);
 
 Vue.use(VModal);
 

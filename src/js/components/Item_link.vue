@@ -4,7 +4,7 @@
             <div class="newtab__item_holder">
                 <button
                     class="newtab__item_button newtab__item_button--second"
-                    @click="removeItem(sectionKey, itemKey)"
+                    @click="removeItem(itemKey)"
                 >
                     <i class="fas fa-trash-alt"></i>
                 </button>
@@ -102,20 +102,21 @@
 </template>
 
 <script>
-import moment from 'moment';
-
 export default {
     props: {
         item: {
             type: Object,
+            required: true,
         },
 
         sectionKey: {
             type: Number,
+            required: true,
         },
 
         itemKey: {
             type: Number,
+            required: true,
         },
     },
 
@@ -159,9 +160,9 @@ export default {
             this.closeItemModal();
         },
 
-        removeItem (sectionKey, itemKey) {
+        removeItem () {
             if (confirm('Delete item?')) {
-                this.sections[sectionKey].items.splice(itemKey, 1);
+                this.$emit('remove-item');
             }
         },
 
@@ -176,6 +177,6 @@ export default {
 
             this.$modal.hide(this.modalName);
         },
-    }
+    },
 };
 </script>

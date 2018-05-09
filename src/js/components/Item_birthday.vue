@@ -51,7 +51,6 @@
                 </a>
             </div>
 
-
             <div class="newtab__item_holder newtab__item_holder--birthday">
                 <div class="newtab__item_body">
                     <span
@@ -221,9 +220,12 @@ export default {
     props: {
         items: {
             type: Array,
+            required: true,
         },
+
         sectionKey: {
             type: Number,
+            required: true,
         },
     },
 
@@ -256,7 +258,7 @@ export default {
 
         removePerson (personKey) {
             if (confirm('Delete person?')) {
-                this.sections[this.birthdayModal.sectionKey].items.splice(personKey, 1);
+                this.$emit('remove-item', personKey);
             }
         },
 
@@ -316,7 +318,7 @@ export default {
 
             this.items.splice(0);
 
-            let section = importText
+            importText
                 .items
                 .filter(item => item.name && item.date)
                 .map((item, itemKey) =>
