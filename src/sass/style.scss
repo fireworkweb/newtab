@@ -101,6 +101,10 @@
                 .py-2/4;
         }
 
+        &-item {
+            @apply .inline-block;
+        }
+
         .newtab__buttons {
             @apply .p-0;
         }
@@ -119,20 +123,21 @@
             @apply .w-32;
         }
 
+        &_buttons {
+            @apply .absolute;
+            top: .75rem;
+            right: .75rem;
+        }
+
         &_button {
             @apply
-                .absolute
+                .inline-block
                 .p-1/4
                 .opacity-25
                 .text-grey-darker;
 
-            top: .75rem;
 
             &:hover { @apply .opacity-100; }
-
-            &--first { right: 1rem; }
-            &--second { right: 2.5rem; }
-            &--third { right: 4rem; }
         }
 
         &_holder {

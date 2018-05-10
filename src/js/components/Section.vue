@@ -3,31 +3,37 @@
         <div class="newtab__section_header">
             <h2 class="newtab__subtitle" v-text="section.title"></h2>
 
-            <div class="newtab__buttons" v-if="! lock">
-                <button
-                    class="newtab__button"
-                    title="Delete Section"
-                    @click="removeSection(sectionKey)"
-                >
-                    <i class="fas fa-trash-alt"></i>
-                </button>
+            <ul class="newtab__buttons" v-if="! lock">
+                <li>
+                    <button
+                        class="newtab__button"
+                        title="Delete Section"
+                        @click="removeSection(sectionKey)"
+                    >
+                        <i class="fas fa-trash-alt"></i>
+                    </button>
+                </li>
 
-                <button
-                    class="newtab__button"
-                    title="Edit Section"
-                    @click="openSectionModal()"
-                >
-                    <i class="fas fa-edit"></i>
-                </button>
+                <li>
+                    <button
+                        class="newtab__button"
+                        title="Edit Section"
+                        @click="openSectionModal()"
+                    >
+                        <i class="fas fa-edit"></i>
+                    </button>
+                </li>
 
-                <button
-                    class="newtab__button"
-                    @click="openItemModal(sectionKey)"
-                >
-                    <i class="fas fa-plus"></i>
-                    Add Item
-                </button>
-            </div>
+                <li>
+                    <button
+                        class="newtab__button"
+                        @click="openItemModal(sectionKey)"
+                    >
+                        <i class="fas fa-plus"></i>
+                        Add Item
+                    </button>
+                </li>
+            </ul>
         </div>
 
         <div
@@ -55,6 +61,7 @@
                     :section-key="sectionKey"
                     :item-key="itemKey"
                     @remove-item="removeItem(itemKey)"
+                    class="newtab__section-item"
                 ></item-link>
             </draggable>
         </div>
@@ -236,7 +243,6 @@ export default {
             this.$modal.hide(this.sectionNameModal);
         },
 
-        // ----------------------------Item link ----------------------------------
         openItemModal () {
             this.itemModal.modalName = 'Add Item';
 
@@ -270,7 +276,6 @@ export default {
         removeItem (itemKey) {
             this.section.items.splice(itemKey, 1);
         },
-        // ----------------------------Fim Item link ----------------------------------
     },
 };
 </script>

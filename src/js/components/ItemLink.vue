@@ -1,20 +1,20 @@
 <template>
-    <div style="display: inline-block">
+    <div>
         <div class="newtab__item">
             <div class="newtab__item_holder">
-                <button
-                    class="newtab__item_button newtab__item_button--second"
-                    @click="removeItem(itemKey)"
-                >
-                    <i class="fas fa-trash-alt"></i>
-                </button>
+                <ul class="newtab__item_buttons">
+                    <li class="newtab__item_button">
+                        <button @click="removeItem(itemKey)">
+                            <i class="fas fa-trash-alt"></i>
+                        </button>
+                    </li>
 
-                <button
-                    class="newtab__item_button newtab__item_button--first"
-                    @click="openItemModal()"
-                >
-                    <i class="fas fa-edit"></i>
-                </button>
+                    <li class="newtab__item_button">
+                        <button @click="openItemModal()">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                    </li>
+                </ul>
 
                 <a class="newtab__item_body" :href="item.url">
                     <span v-if="item.icon" class="newtab__item_icon">

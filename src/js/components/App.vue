@@ -293,7 +293,6 @@ export default {
     },
 
     methods: {
-        // ---------------------------- Section ----------------------------------
         openSectionModal (sectionKey) {
             this.sectionModal.modalName = 'Add Section';
             this.sectionModal.sectionKey = sectionKey;
@@ -321,9 +320,7 @@ export default {
 
             this.$modal.hide('sectionModal');
         },
-        // ---------------------------- Fim Section ----------------------------------
 
-        // ----------------------------Import / Export ----------------------------------
         openImport () {
             this.$modal.show('importModal');
         },
@@ -399,8 +396,6 @@ export default {
 
             this.closeExport();
         },
-
-        // ----------------------------Fim Import / Export ----------------------------------
 
         reset () {
             if (confirm('Reset all configurations?')) {
