@@ -20,6 +20,7 @@ mix
                 hash: true,
             }),
         ],
+        output: { publicPath: '' },
     })
     .purgeCss({
         globs: [ './src/**/index.html', './src/**/*.vue' ],
