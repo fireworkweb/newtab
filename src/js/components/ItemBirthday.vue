@@ -2,7 +2,7 @@
     <div>
         <div class="newtab__item newtab__item--birthday">
             <div class="newtab__item_holder newtab__item_holder--birthday">
-                <ul class="newtab__item_buttons">
+                <ul class="newtab__item_buttons" v-if="! lock">
                     <li class="newtab__item_button">
                         <button
 
@@ -232,6 +232,11 @@ export default {
 
         sectionKey: {
             type: Number,
+            required: true,
+        },
+
+        lock: {
+            type: Boolean,
             required: true,
         },
     },
