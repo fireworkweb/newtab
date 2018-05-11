@@ -2,7 +2,7 @@
     <div>
         <div class="newtab__item">
             <div class="newtab__item_holder">
-                <ul class="newtab__item_buttons">
+                <ul class="newtab__item_buttons" v-if="! lock">
                     <li class="newtab__item_button">
                         <button @click="removeItem(itemKey)">
                             <i class="fas fa-trash-alt"></i>
@@ -116,6 +116,11 @@ export default {
 
         itemKey: {
             type: Number,
+            required: true,
+        },
+
+        lock: {
+            type: Boolean,
             required: true,
         },
     },

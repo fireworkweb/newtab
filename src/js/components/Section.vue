@@ -40,10 +40,11 @@
             v-if="section.type === 'birthday'"
             class="newtab__section_body"
         >
-            <draggable :list="section.items">
+            <draggable :list="section.items" :options="draggableOptions">
                 <item-birthday
                     :items.sync="section.items"
                     :section-key="sectionKey"
+                    :lock="lock"
                     @remove-item="removeItem($event)"
                 ></item-birthday>
             </draggable>
@@ -53,13 +54,14 @@
             v-if="section.type === 'link'"
             class="newtab__section_body"
         >
-            <draggable :list="section.items">
+            <draggable :list="section.items" :options="draggableOptions">
                 <item-link
                     v-for="(item, itemKey) in section.items"
                     :key="itemKey"
                     :item.sync="item"
                     :section-key="sectionKey"
                     :item-key="itemKey"
+                    :lock="lock"
                     @remove-item="removeItem(itemKey)"
                     class="newtab__section-item"
                 ></item-link>
@@ -181,10 +183,12 @@ export default {
             type: Object,
             required: true,
         },
+
         sectionKey: {
             type: Number,
             required: true,
         },
+
         lock: {
             type: Boolean,
             required: true,
@@ -214,6 +218,12 @@ export default {
 
         itemNameModal () {
             return 'itemNameModal' + this.sectionKey;
+        },
+
+        draggableOptions () {
+            return {
+                disabled: this.lock,
+            };
         },
     },
 
