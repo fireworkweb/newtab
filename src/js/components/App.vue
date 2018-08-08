@@ -276,7 +276,7 @@ export default {
 
         themes: [
             'grey', 'red', 'orange', 'yellow', 'green',
-            'teal', 'blue', 'indigo', 'purple', 'pink',
+            'teal', 'blue', 'indigo', 'purple', 'pink', 'blood',
         ],
 
         theme: 'purple',
