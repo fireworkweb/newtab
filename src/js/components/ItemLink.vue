@@ -54,12 +54,7 @@
                 </div>
 
                 <div class="newtab__modal_field">
-                    <input
-                        class="newtab__modal_input"
-                        type="text"
-                        placeholder="Icon"
-                        v-model="itemModal.icon"
-                    >
+                    <icon-select v-model="itemModal.icon"></icon-select>
                 </div>
 
                 <div class="newtab__modal_field">
