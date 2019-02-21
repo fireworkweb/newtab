@@ -16,7 +16,7 @@
 
 <script>
 import VSelect from 'vue-select';
-import json from './icons.json';
+import icons from './icons.json';
 
 export default {
     components: {VSelect},
@@ -29,7 +29,7 @@ export default {
     },
 
     data: () => ({
-        options: json,
+        options: icons,
     }),
 
     computed: {
