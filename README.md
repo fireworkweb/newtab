@@ -34,3 +34,11 @@ Add the website: https://newtab.fireworkweb.com/ as your home page and restart y
 ### Contributing
 
 All contribution is welcome, please feel free to open tickets and pull requests.
+
+### icons.json
+
+Generate with command:
+
+```sh
+yarn generate-icons
+```
