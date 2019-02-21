@@ -1,7 +1,4 @@
 {
   "name": "newtab",
-  "alias": "newtab",
-  "features": {
-    "cloud": "v2"
-  }
+  "alias": "newtab"
 }
