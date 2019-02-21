@@ -1,5 +1,8 @@
 <template>
-    <v-select v-model="mutableValue" :options="options" label="title">
+    <v-select
+        v-model="mutableValue"
+        :options="options"
+        label="title">
         <template slot="selected-option" slot-scope="selected">
             <i class="fa-pull-left" :class="selected.title"></i>
             {{ selected.title }}
@@ -16,11 +19,11 @@ import VSelect from 'vue-select';
 import json from './icons.json';
 
 export default {
-    components: {
-        VSelect
-    },
+    components: {VSelect},
+
     props: {
         value: {
+            type: String,
             default: null,
         },
     },
