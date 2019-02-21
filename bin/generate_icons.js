@@ -34,15 +34,15 @@ horseman
             const json = [];
 
             $('#solid .icon-name')
-                .each(function (i, el) {
+                .each(function () {
                     incons.push('fas fa-' + $(this).text());
                 });
             $('#regular .icon-name')
-                .each(function (i, el) {
+                .each(function () {
                     incons.push('far fa-' + $(this).text());
                 });
             $('#brands .icon-name')
-                .each(function (i, el) {
+                .each(function () {
                     incons.push('fab fa-' + $(this).text());
                 });
 
