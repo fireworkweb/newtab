@@ -12,13 +12,13 @@
 </template>
 
 <script>
-import Vue from 'vue';
 import VSelect from 'vue-select';
 import json from './icons.json';
 
-Vue.component('v-select', VSelect);
-
 export default {
+    components: {
+        VSelect
+    },
     props: {
         value: {
             default: null,
@@ -26,7 +26,7 @@ export default {
     },
 
     data: () => ({
-        options: json.icons,
+        options: json,
     }),
 
     computed: {

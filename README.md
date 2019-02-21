@@ -37,47 +37,8 @@ All contribution is welcome, please feel free to open tickets and pull requests.
 
 ### icons.json
 
-Extracted from [Font Awesome](https://fontawesome.com/cheatsheet#brands)
+Generate with command:
 
-Used to save file [Devtools Snippets](https://github.com/bgrins/devtools-snippets/tree/master/snippets/console-save)
-
-In console with: 
-
-```javascript
-var response = await fetch('https://use.fontawesome.com/releases/v5.2.0/css/all.css').then(response => response.text());
-
-var incons = [];
-var json = {
-    "icons": []
-};
-
-$$('#solid .icon-name').forEach(function (el) {
-    incons.push('fas fa-' + el.innerText);
-});
-$$('#regular .icon-name').forEach(function (el) {
-    incons.push('far fa-' + el.innerText);
-});
-$$('#brands .icon-name').forEach(function (el) {
-    incons.push('fab fa-' + el.innerText);
-});
-
-response.match(/(?!\.)fa-[-\w]+(?=:before)/g)
-    .forEach((element) => {
-        ['fas', 'far', 'fab'].forEach(prefix => {
-            let item = prefix + ' ' + element;
-            if (!json.icons.includes(item) && incons.includes(item)) {
-                json.icons.push(item);
-            }
-        });
-    });
-
-var blob = new Blob([JSON.stringify(json, undefined, 4)], {type: 'text/json'}),
-    e = document.createEvent('MouseEvents'),
-    a = document.createElement('a');
-
-a.download = 'icons.json';
-a.href = window.URL.createObjectURL(blob);
-a.dataset.downloadurl =  ['text/json', a.download, a.href].join(':');
-e.initMouseEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
-a.dispatchEvent(e);
+```sh
+yarn generate-icons
 ```
