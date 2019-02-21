@@ -2,11 +2,13 @@
     <v-select
         v-model="mutableValue"
         :options="options"
-        label="title">
+        label="title"
+    >
         <template slot="selected-option" slot-scope="selected">
             <i class="fa-pull-left" :class="selected.title"></i>
             {{ selected.title }}
         </template>
+
         <template slot="option" slot-scope="option">
             <i :class="option.title"></i>
             {{ option.title }}
