@@ -20,6 +20,7 @@
     "vuedraggable": "^2.16.0"
   },
   "devDependencies": {
+    "@vue/cli-service": "^3.4.0",
     "@fortawesome/free-brands-svg-icons": "^5.7.2",
     "@fortawesome/free-regular-svg-icons": "^5.7.2",
     "@fortawesome/free-solid-svg-icons": "^5.7.2",
