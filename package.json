@@ -6,7 +6,7 @@
     "serve": "vue-cli-service serve",
     "dev": "vue-cli-service build --mode development",
     "build": "vue-cli-service build",
-    "lint": "eslint -c .eslintrc.prod.json --ext vue,js src",
+    "lint": "vue-cli-service lint src",
     "lint:fix": "yarn lint --fix",
     "start": "serve ./dist --single",
     "generate-icons": "node bin/generate_icons.js"
@@ -21,13 +21,15 @@
     "vuedraggable": "^2.16.0"
   },
   "devDependencies": {
-    "@vue/cli-service": "^3.4.0",
     "@fortawesome/free-brands-svg-icons": "^5.7.2",
     "@fortawesome/free-regular-svg-icons": "^5.7.2",
     "@fortawesome/free-solid-svg-icons": "^5.7.2",
+    "@vue/cli-plugin-eslint": "^3.4.0",
+    "@vue/cli-service": "^3.4.0",
+    "babel-eslint": "^10.0.1",
     "eslint": "^5.3.0",
     "eslint-plugin-vue": "^4.7.1",
-    "node-sass": "^4.11.0",
+    "sass": "^1.17.2",
     "sass-loader": "^7.1.0",
     "tailwindcss": "^0.6.5",
     "vue-template-compiler": "2.5.16"

@@ -406,8 +406,8 @@ export default {
 
         getSaveStateConfig () {
             return {
-                'cacheKey': 'App',
-                'saveProperties': ['theme', 'sections', 'lock'],
+                cacheKey: 'App',
+                saveProperties: ['theme', 'sections', 'lock'],
             };
         },
 
