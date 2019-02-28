@@ -9,5 +9,4 @@ trim_trailing_whitespace = true
 charset = utf-8
 
 [{*.json,.*rc,*.yml}]
-indent_style = space
 indent_size = 2
