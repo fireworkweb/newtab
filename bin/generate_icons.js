@@ -12,4 +12,4 @@ const json = Object.values(fas)
     .concat(Object.values(fab))
     .map(a => a.prefix + " fa-" + a.iconName);
 
-writeFileSync(`${baseDir}/src/js/components/icons.json`, JSON.stringify(json));
+writeFileSync(`${baseDir}/src/components/icons.json`, JSON.stringify(json));

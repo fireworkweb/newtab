@@ -10,7 +10,7 @@ Using Yarn
 
 ```sh
 yarn install
-yarn hot
+yarn serve
 ```
 
 ### How to use

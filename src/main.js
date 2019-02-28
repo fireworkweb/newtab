@@ -1,5 +1,5 @@
 import Vue from 'vue';
-import App from './components/App.vue';
+import App from './App.vue';
 import Section from './components/Section.vue';
 import ItemLink from './components/ItemLink.vue';
 import ItemBirthday from './components/ItemBirthday.vue';
